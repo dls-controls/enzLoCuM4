@@ -1,0 +1,6 @@
+enzLoCuM4 - Pete Owens 1-12-2005
+    Application to control ENZ LoCuM-4 low current monitor
+
+Pre-requisite:
+    Stream device release_3_0 or later must be used.
+

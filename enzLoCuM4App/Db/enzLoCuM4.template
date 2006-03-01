@@ -1,0 +1,716 @@
+# enzLoCuM4.template
+# Template database for an ENZ LoCuM-4 Low Current Monitor
+# Pete Owens - 2-12-05
+#
+# substitutions:
+# device  - device name
+# port    - serial port on IOC (steam device code ie /ty/0/1 => ty_0_1)
+# adr     - address
+################################################################################
+# Measuring Range
+#
+#% archiver 2 Monitor
+#% controldesk Measuring Range readback
+#
+record(mbbi, "$(device):RANGE")
+{
+    field(DESC, "Measuring Range")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol range($(adr)) $(port) 0")
+    field(SCAN, "2 second")
+    field(ZRST, "100pA")
+    field(ONST, "1nA")
+    field(TWST, "10nA")
+    field(THST, "100nA")
+    field(FRST, "1uA")
+    field(FVST, "10uA")
+    field(SXST, "100uA")
+    field(SVST, "1mA")
+    field(EIST, "Auto")
+    field(NIST, "Err")
+}
+#
+#% controldesk Measuring Range setpoint
+#
+record(mbbo, "$(device):SETRANGE")
+{
+    field(DESC, "Measuring Range")
+    field(DTYP, "stream")
+    field(OUT,  "@enzLoCuM4.protocol setrange($(adr)) $(port) 0")
+    field(ZRST, "100pA")
+    field(ONST, "1nA")
+    field(TWST, "10nA")
+    field(THST, "100nA")
+    field(FRST, "1uA")
+    field(FVST, "10uA")
+    field(SXST, "100uA")
+    field(SVST, "1mA")
+    field(EIST, "Auto")
+}
+################################################################################
+# Bias Voltage Source
+#
+#% archiver 2 Monitor
+#% controldesk Bias Voltage Source readback
+#
+record(mbbi, "$(device):BIASV")
+{
+    field(DESC, "Bias Voltage Source")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol biasv($(adr)) $(port) 0")
+    #field(SCAN, "2 second")
+    field(SCAN, "5 second")
+    field(ZRST, "Plus")
+    field(ONST, "Minus")
+    field(TWST, "External")
+    field(THST, "Ground")
+}
+#
+#% controldesk Bias Voltage Source setpoint
+#
+record(mbbo, "$(device):SETBIASV")
+{
+    field(DESC, "Bias Voltage Source")
+    field(DTYP, "stream")
+    field(OUT,  "@enzLoCuM4.protocol setbiasv($(adr)) $(port) 0")
+    field(ZRST, "Plus")
+    field(ONST, "Minus")
+    field(TWST, "External")
+    field(THST, "Ground")
+}
+################################################################################
+# HV
+#
+#% archiver 10 Monitor
+#% controldesk HV smon
+#
+record(bi, "$(device):HV")
+{
+    field(DESC, "HV")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol hv($(adr)) $(port) 0")
+    field(SCAN, "10 second")
+    field(ZNAM, "Off")
+    field(ONAM, "On")
+}
+################################################################################
+# Ext
+#
+#% archiver 10 Monitor
+#% controldesk Ext smon
+#
+record(bi, "$(device):EXT")
+{
+    field(DESC, "Ext")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol ext($(adr)) $(port) 0")
+    field(SCAN, "10 second")
+    field(ZNAM, "Off")
+    field(ONAM, "On")
+}
+################################################################################
+# Bias +-
+#
+#% archiver 10 Monitor
+#% controldesk bias smon
+#
+record(bi, "$(device):BIAS")
+{
+    field(DESC, "Bias")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol bias($(adr)) $(port) 0")
+    field(SCAN, "10 second")
+    field(ZNAM, "Off")
+    field(ONAM, "On")
+}
+################################################################################
+# Auto
+#
+#% archiver 10 Monitor
+#% controldesk Auto smon
+#
+record(bi, "$(device):AUTO")
+{
+    field(DESC, "Auto")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol auto($(adr)) $(port) 0")
+    field(SCAN, "10 second")
+    field(ZNAM, "Off")
+    field(ONAM, "On")
+}
+################################################################################
+# Error Status
+#
+record(stringin, "$(device):ERR")
+{
+    field(DESC, "Error Status")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol error($(adr)) $(port) 0")
+    field(SCAN, "10 second")
+}
+################################################################################
+# Limits
+#
+# Channel A
+#
+#% archiver 5 Monitor
+#% controldesk Channel A Upper Limit readback
+#
+record(longin, "$(device):CHA:HI")
+{
+    field(DESC, "High Limit A")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol limitah($(adr)) $(port) 0")
+    field(SCAN, "5 second")
+    field(FLNK, "$(device):CHA:CALLO")
+    field(EGU,  "mV")
+    field(HOPR, "10000")
+    field(LOPR, "5000")
+    field(HIHI, "9901")
+    field(HIGH, "9901")
+    field(LOW,  "8299")
+    field(LOLO, "5299")
+    field(HHSV, "MAJOR")
+    field(HSV,  "MINOR")
+    field(LSV,  "MINOR")
+    field(LLSV, "MAJOR")
+}
+#
+#% controldesk Channel A Upper Limit setpoint
+#
+record(longout, "$(device):CHA:SETHI")
+{
+    field(VAL,  "9800")
+    field(DESC, "High Limit A")
+    field(DTYP, "stream")
+    field(OUT,  "@enzLoCuM4.protocol limit($(adr),CHA,HI) $(port) 0")
+    field(EGU,  "mV")
+    field(HOPR, "10000")
+    field(LOPR, "5000")
+    field(DRVH, "9900")
+    field(DRVL, "5300")
+}
+#
+#% archiver 5 Monitor
+#% controldesk Channel A Lower Limit readback
+#
+record(longin, "$(device):CHA:LO")
+{
+    field(DESC, "Low Limit A")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol limital($(adr)) $(port) 0")
+    field(SCAN, "5 second")
+    field(FLNK, "$(device):CHA:CALHI")
+    field(EGU,  "mV")
+    field(HOPR, "1000")
+    field(LOPR, "500")
+    field(HIHI, "961")
+    field(HIGH, "961")
+    field(LOW,  "499")
+    field(LOLO, "499")
+    field(HHSV, "MAJOR")
+    field(HSV,  "MINOR")
+    field(LSV,  "MINOR")
+    field(LLSV, "MAJOR")
+}
+#
+#% controldesk Channel A Lower Limit setpoint
+#
+record(longout, "$(device):CHA:SETLO")
+{
+    field(VAL,  "800")
+    field(DESC, "Low Limit A")
+    field(DTYP, "stream")
+    field(OUT,  "@enzLoCuM4.protocol limit($(adr),CHA,LO) $(port) 0")
+    field(EGU,  "mV")
+    field(HOPR, "1000")
+    field(LOPR, "500")
+    field(DRVH, "960")
+    field(DRVL, "500")
+}
+record(calcout, "$(device):CHA:CALHI")
+{
+    field(CALC, "A*10+299")
+    field(INPA, "$(device):CHA:LO")
+    field(OUT,  "$(device):CHA:HI.LOW PP")
+}
+record(calcout, "$(device):CHA:CALLO")
+{
+    field(CALC, "A/10-29")
+    field(INPA, "$(device):CHA:HI")
+    field(OUT,  "$(device):CHA:LO.HIGH PP")
+}
+#
+# Channel B
+#
+#% archiver 5 Monitor
+#% controldesk Channel B Upper Limit readback
+#
+record(longin, "$(device):CHB:HI")
+{
+    field(DESC, "High Limit B")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol limitbh($(adr)) $(port) 0")
+    field(SCAN, "5 second")
+    field(FLNK, "$(device):CHB:CALLO")
+    field(EGU,  "mV")
+    field(HOPR, "10000")
+    field(LOPR, "5000")
+    field(HIHI, "9901")
+    field(HIGH, "9901")
+    field(LOW,  "8299")
+    field(LOLO, "5299")
+    field(HHSV, "MAJOR")
+    field(HSV,  "MINOR")
+    field(LSV,  "MINOR")
+    field(LLSV, "MAJOR")
+}
+#
+#% controldesk Channel B Upper Limit setpoint
+#
+record(longout, "$(device):CHB:SETHI")
+{
+    field(VAL,  "9800")
+    field(DESC, "High Limit B")
+    field(DTYP, "stream")
+    field(OUT,  "@enzLoCuM4.protocol limit($(adr),CHB,HI) $(port) 0")
+    field(EGU,  "mV")
+    field(HOPR, "10000")
+    field(LOPR, "5000")
+    field(DRVH, "9900")
+    field(DRVL, "5300")
+}
+#
+#% archiver 5 Monitor
+#% controldesk Channel B Lower Limit readback
+#
+record(longin, "$(device):CHB:LO")
+{
+    field(DESC, "Low Limit B")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol limitbl($(adr)) $(port) 0")
+    field(SCAN, "5 second")
+    field(FLNK, "$(device):CHB:CALHI")
+    field(EGU,  "mV")
+    field(HOPR, "1000")
+    field(LOPR, "500")
+    field(HIHI, "961")
+    field(HIGH, "961")
+    field(LOW,  "499")
+    field(LOLO, "499")
+    field(HHSV, "MAJOR")
+    field(HSV,  "MINOR")
+    field(LSV,  "MINOR")
+    field(LLSV, "MAJOR")
+}
+#
+#% controldesk Channel B Lower Limit setpoint
+#
+record(longout, "$(device):CHB:SETLO")
+{
+    field(VAL,  "800")
+    field(DESC, "Low Limit B")
+    field(DTYP, "stream")
+    field(OUT,  "@enzLoCuM4.protocol limit($(adr),CHB,LO) $(port) 0")
+    field(EGU,  "mV")
+    field(HOPR, "1000")
+    field(LOPR, "500")
+    field(DRVH, "960")
+    field(DRVL, "500")
+}
+record(calcout, "$(device):CHB:CALHI")
+{
+    field(CALC, "A*10+299")
+    field(INPA, "$(device):CHB:LO")
+    field(OUT,  "$(device):CHB:HI.LOW PP")
+}
+record(calcout, "$(device):CHB:CALLO")
+{
+    field(CALC, "A/10-29")
+    field(INPA, "$(device):CHB:HI")
+    field(OUT,  "$(device):CHB:LO.HIGH PP")
+}
+#
+# Channel C
+#
+#% archiver 5 Monitor
+#% controldesk Channel C Upper Limit readback
+#
+record(longin, "$(device):CHC:HI")
+{
+    field(DESC, "High Limit C")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol limitch($(adr)) $(port) 0")
+    field(SCAN, "5 second")
+    field(FLNK, "$(device):CHC:CALLO")
+    field(EGU,  "mV")
+    field(HOPR, "10000")
+    field(LOPR, "5000")
+    field(HIHI, "9901")
+    field(HIGH, "9901")
+    field(LOW,  "8299")
+    field(LOLO, "5299")
+    field(HHSV, "MAJOR")
+    field(HSV,  "MINOR")
+    field(LSV,  "MINOR")
+    field(LLSV, "MAJOR")
+}
+#
+#% controldesk Channel C Upper Limit setpoint
+#
+record(longout, "$(device):CHC:SETHI")
+{
+    field(VAL,  "9800")
+    field(DESC, "High Limit C")
+    field(DTYP, "stream")
+    field(OUT,  "@enzLoCuM4.protocol limit($(adr),CHC,HI) $(port) 0")
+    field(EGU,  "mV")
+    field(HOPR, "10000")
+    field(LOPR, "5000")
+    field(DRVH, "9900")
+    field(DRVL, "5300")
+}
+#
+#% archiver 5 Monitor
+#% controldesk Channel C Lower Limit readback
+#
+record(longin, "$(device):CHC:LO")
+{
+    field(DESC, "Low Limit C")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol limitcl($(adr)) $(port) 0")
+    field(SCAN, "5 second")
+    field(FLNK, "$(device):CHC:CALHI")
+    field(EGU,  "mV")
+    field(HOPR, "1000")
+    field(LOPR, "500")
+    field(HIHI, "961")
+    field(HIGH, "961")
+    field(LOW,  "499")
+    field(LOLO, "499")
+    field(HHSV, "MAJOR")
+    field(HSV,  "MINOR")
+    field(LSV,  "MINOR")
+    field(LLSV, "MAJOR")
+}
+#
+#% controldesk Channel C Lower Limit setpoint
+#
+record(longout, "$(device):CHC:SETLO")
+{
+    field(VAL,  "800")
+    field(DESC, "Low Limit C")
+    field(DTYP, "stream")
+    field(OUT,  "@enzLoCuM4.protocol limit($(adr),CHC,LO) $(port) 0")
+    field(EGU,  "mV")
+    field(HOPR, "1000")
+    field(LOPR, "500")
+    field(DRVH, "960")
+    field(DRVL, "500")
+}
+record(calcout, "$(device):CHC:CALHI")
+{
+    field(CALC, "A*10+299")
+    field(INPA, "$(device):CHC:LO")
+    field(OUT,  "$(device):CHC:HI.LOW PP")
+}
+record(calcout, "$(device):CHC:CALLO")
+{
+    field(CALC, "A/10-29")
+    field(INPA, "$(device):CHC:HI")
+    field(OUT,  "$(device):CHC:LO.HIGH PP")
+}
+#
+# Channel D
+#
+#% archiver 5 Monitor
+#% controldesk Channel D Upper Limit readback
+#
+record(longin, "$(device):CHD:HI")
+{
+    field(DESC, "High Limit D")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol limitdh($(adr)) $(port) 0")
+    field(SCAN, "5 second")
+    field(FLNK, "$(device):CHD:CALLO")
+    field(EGU,  "mV")
+    field(HOPR, "10000")
+    field(LOPR, "5000")
+    field(HIHI, "9901")
+    field(HIGH, "9901")
+    field(LOW,  "8299")
+    field(LOLO, "5299")
+    field(HHSV, "MAJOR")
+    field(HSV,  "MINOR")
+    field(LSV,  "MINOR")
+    field(LLSV, "MAJOR")
+}
+#
+#% controldesk Channel D Upper Limit setpoint
+#
+record(longout, "$(device):CHD:SETHI")
+{
+    field(VAL,  "9800")
+    field(DESC, "High Limit D")
+    field(DTYP, "stream")
+    field(OUT,  "@enzLoCuM4.protocol limit($(adr),CHD,HI) $(port) 0")
+    field(EGU,  "mV")
+    field(HOPR, "10000")
+    field(LOPR, "5000")
+    field(DRVH, "9900")
+    field(DRVL, "5300")
+}
+#
+#% archiver 5 Monitor
+#% controldesk Channel D Lower Limit readback
+#
+record(longin, "$(device):CHD:LO")
+{
+    field(DESC, "Low Limit D")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol limitdl($(adr)) $(port) 0")
+    field(SCAN, "5 second")
+    field(FLNK, "$(device):CHD:CALHI")
+    field(EGU,  "mV")
+    field(HOPR, "1000")
+    field(LOPR, "500")
+    field(HIHI, "961")
+    field(HIGH, "961")
+    field(LOW,  "499")
+    field(LOLO, "499")
+    field(HHSV, "MAJOR")
+    field(HSV,  "MINOR")
+    field(LSV,  "MINOR")
+    field(LLSV, "MAJOR")
+}
+#
+#% archiver 5 Monitor
+#% controldesk Channel D Lower Limit setpoint
+#
+record(longout, "$(device):CHD:SETLO")
+{
+    field(VAL,  "800")
+    field(DESC, "Low Limit D")
+    field(DTYP, "stream")
+    field(OUT,  "@enzLoCuM4.protocol limit($(adr),CHD,LO) $(port) 0")
+    field(EGU,  "mV")
+    field(HOPR, "1000")
+    field(LOPR, "500")
+    field(DRVH, "960")
+    field(DRVL, "500")
+}
+record(calcout, "$(device):CHD:CALHI")
+{
+    field(CALC, "A*10+299")
+    field(INPA, "$(device):CHD:LO")
+    field(OUT,  "$(device):CHD:HI.LOW PP")
+}
+record(calcout, "$(device):CHD:CALLO")
+{
+    field(CALC, "A/10-29")
+    field(INPA, "$(device):CHD:HI")
+    field(OUT,  "$(device):CHD:LO.HIGH PP")
+}
+################################################################################
+# Integration Window
+#
+#% archiver 5 Monitor
+#% controldesk Integration Window readback
+#
+record(mbbi, "$(device):WINDOW")
+{
+    field(DESC, "Integration Window")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol window($(adr)) $(port) 0")
+    field(SCAN, "5 second")
+    field(ZRST, "4")
+    field(ONST, "8")
+    field(TWST, "16")
+    field(THST, "32")
+    field(FRST, "64")
+}
+#
+#% controldesk Integration Window setpoint
+#
+record(mbbo, "$(device):SETWINDOW")
+{
+    field(DESC, "Integration Window")
+    field(DTYP, "stream")
+    field(OUT,  "@enzLoCuM4.protocol setwindow($(adr)) $(port) 0")
+    field(ZRST, "4")
+    field(ONST, "8")
+    field(TWST, "16")
+    field(THST, "32")
+    field(FRST, "64")
+}
+################################################################################
+# Status
+#
+# Front Panel Switches
+#
+record(longin, "$(device):RAWFP")
+{
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol sta1($(adr)) $(port) 0")
+}
+record(calc, "$(device):CALFP")
+{
+    field(CALC, "((A-12336)|(A-12336>>4))&255")
+    field(INPA, "$(device):RAWFP PP")
+}
+#
+#% archiver 5 Monitor
+#% controldesk Front Panel Switches smon
+#
+record(mbbiDirect, "$(device):FP")
+{
+    field(DESC, "Front Panel Switches")
+    field(INP,  "$(device):CALFP PP")
+    field(SCAN, "5 second")
+}
+#
+# Measuring Range
+#
+record(longin, "$(device):RAWMR")
+{
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol sta2($(adr)) $(port) 0")
+}
+record(calc, "$(device):CALMR")
+{
+    field(CALC, "((A-12336)|(A-12336>>4))&255")
+    field(INPA, "$(device):RAWMR PP")
+}
+#
+#% archiver 5 Monitor
+#% controldesk Measuring Range smon
+#
+record(mbbiDirect, "$(device):MR")
+{
+    field(DESC, "Measuring Range")
+    field(INP,  "$(device):CALMR PP")
+    field(SCAN, "5 second")
+}
+#
+# Automatic Ranging
+#
+record(longin, "$(device):RAWAR")
+{
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol sta3($(adr)) $(port) 0")
+}
+record(calc, "$(device):CALAR")
+{
+    field(CALC, "((A-12336)|(A-12336>>4))&255")
+    field(INPA, "$(device):RAWAR PP")
+}
+#
+#% archiver 5 Monitor
+#% controldesk Automatic Ranging smon
+#
+record(mbbiDirect, "$(device):AR")
+{
+    field(DESC, "Automatic Ranging")
+    field(INP,  "$(device):CALAR PP")
+    field(SCAN, "5 second")
+}
+################################################################################
+# Version
+#
+#% archiver 10 Monitor
+#% controldesk Version readback
+#
+record(ai, "$(device):VERSION")
+{
+    field(DESC, "Version")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol version($(adr)) $(port) 0")
+    field(SCAN, "10 second")
+    field(PREC, "2")
+}
+################################################################################
+# Serial Number
+#
+#% archiver 10 Monitor
+#% controldesk Serial Number readback
+#
+record(longin, "$(device):SERIAL")
+{
+    field(DESC, "Serial Number")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol serial($(adr)) $(port) 0")
+    field(SCAN, "10 second")
+}
+################################################################################
+# Reset
+#
+#% controldesk Reset scon
+#
+record(bo, "$(device):RESET")
+{
+    field(DESC, "Reset")
+    field(DTYP, "stream")
+    field(OUT,  "@enzLoCuM4.protocol reset($(adr)) $(port) 0")
+    field(ZNAM, "Off")
+    field(ONAM, "Reset")
+}
+################################################################################
+# Rectified Channel Peak Values
+#
+#% archiver 5 Monitor
+#% controldesk Automatic Channel A rectified Peak readback
+#
+record(longin, "$(device):CHA:PEAK")
+{
+    field(DESC, "Peak A")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol peak($(adr),CHA) $(port) 0")
+    field(SCAN, "5 second")
+    field(EGU,  "mV")
+}
+#
+#% archiver 5 Monitor
+#% controldesk Automatic Channel B rectified Peak readback
+#
+record(longin, "$(device):CHB:PEAK")
+{
+    field(DESC, "Peak B")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol peak($(adr),CHB) $(port) 0")
+    field(SCAN, "5 second")
+    field(EGU,  "mV")
+}
+#
+#% archiver 5 Monitor
+#% controldesk Automatic Channel C rectified Peak readback
+#
+record(longin, "$(device):CHC:PEAK")
+{
+    field(DESC, "Peak C")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol peak($(adr),CHC) $(port) 0")
+    field(SCAN, "5 second")
+    field(EGU,  "mV")
+}
+#
+#% archiver 5 Monitor
+#% controldesk Automatic Channel D rectified Peak readback
+#
+record(longin, "$(device):CHD:PEAK")
+{
+    field(DESC, "Peak D")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol peak($(adr),CHD) $(port) 0")
+    field(SCAN, "5 second")
+    field(EGU,  "mV")
+}
+
+record(stringin, "$(device):TEST")
+{
+    field(DESC, "Test record")
+    field(DTYP, "stream")
+    field(INP,  "@enzLoCuM4.protocol test($(adr)) $(port) 0")
+    field(SCAN, "10 second")
+}
+
+################################################################################

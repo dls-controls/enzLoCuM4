@@ -1,0 +1,187 @@
+# enzLoCuM4.protocol
+# Stream Device Protocol for an ENZ LoCuM-4 Low Current Monitor
+# Pete Owens 2-12-05
+#
+
+#terminator   = CR;
+terminator   = LF;
+buffersize   = 100;
+replytimeout = 5000;
+readtimeout  = 5000;
+extrainput   = Ignore;
+
+#
+# Configuration
+# 
+setrange  { out "$\$1:CONF:CURR:DC %{1E-10|1E-09|1E-08|1E-07|1E-06|1E-05|1E-04|1E-03|DEF}"; }
+setbiasv  { out "$\$1:CONF:BIAS:SOURCE %{PLUS|MINUS|EXT|DEF}"; }
+range     { out "$\$1:CONF?";
+            in  "\"S1_%{100pA|1nA|10nA|100nA|1\xb5A|10\xb5A|100\xb5A|1mA|Auto|Err}"; 
+          }
+biasv     { out "$\$1:CONF?";
+#            in  "\"S1_%*{100pA|1nA|10nA|100nA|1\xb5A|10\xb5A|100\xb5A|1mA|Auto|Err},"
+             in  "\"S1_\?\?\?%*{,|\?,|\?A,}"
+                 "S2_%{Plus|Minus|Ext|0Volt}" ; 
+          }
+hv        { out "$\$1:CONF?";
+            in  "\"S1_%*{100pA|1nA|10nA|100nA|1\xb5A|10\xb5A|100\xb5A|1mA|Auto|Err},"
+                "S2_%*{Plus|Minus|Ext|0Volt}," 
+                "HV_%{OFF|ON}" ; 
+          }
+ext       { out "$\$1:CONF?";
+            in  "\"S1_%*{100pA|1nA|10nA|100nA|1\xb5A|10\xb5A|100\xb5A|1mA|Auto|Err},"
+                "S2_%*{Plus|Minus|Ext|0Volt}," 
+                "HV_%*{OFF|ON},"
+                "Ext_%{OFF|ON}" ; 
+          }
+bias      { out "$\$1:CONF?";
+            in  "\"S1_%*{100pA|1nA|10nA|100nA|1\xb5A|10\xb5A|100\xb5A|1mA|Auto|Err},"
+                "S2_%*{Plus|Minus|Ext|0Volt}," 
+                "HV_%*{OFF|ON},"
+                "Ext_%*{OFF|ON}," 
+                "Bias\?_%{OFF|ON}" ; 
+          }
+auto      { out "$\$1:CONF?";
+            in  "\"S1_%*{100pA|1nA|10nA|100nA|1\xb5A|10\xb5A|100\xb5A|1mA|Auto|Err},"
+                "S2_%*{Plus|Minus|Ext|0Volt}," 
+                "HV_%*{OFF|ON},"
+                "Ext_%*{OFF|ON}," 
+                "Bias\?_%*{OFF|ON},"
+                "Auto_%{OFF|ON}" ; 
+          }
+
+test     { out "$\$1:CONF?";
+           in  "%s";
+         }
+ 
+
+#
+# System-related Commands
+#
+error     { out "$\$1:SYST:ERR?";
+            in  "\"%s\"";
+          }
+version   { out "$\$1:SYST:VERS?";
+            in  "\"SCPI_ENZ_%f\"";
+          }
+limit     { out "$\$1:SYST:COMP:\$3:\$2 %04d";
+            in  "Comp_\$3_Ch\$2";
+          }
+limitah   { out "$\$1:SYST:COMP?";
+            in  "ChD %*d,%*d";
+            in  "ChC %*d,%*d";
+            in  "ChB %*d,%*d";
+            in  "ChA %d,%*d";
+          }
+limital   { out "$\$1:SYST:COMP?";
+            in  "ChD %*d,%*d";
+            in  "ChC %*d,%*d";
+            in  "ChB %*d,%*d";
+            in  "ChA %*d,%d";
+          }
+limitbh   { out "$\$1:SYST:COMP?";
+            in  "ChD %*d,%*d";
+            in  "ChC %*d,%*d";
+            in  "ChB %d,%*d";
+            in  "ChA %*d,%*d";
+          }
+limitbl   { out "$\$1:SYST:COMP?";
+            in  "ChD %*d,%*d";
+            in  "ChC %*d,%*d";
+            in  "ChB %*d,%d";
+            in  "ChA %*d,%*d";
+          }
+limitch   { out "$\$1:SYST:COMP?";
+            in  "ChD %*d,%*d";
+            in  "ChC %d,%*d";
+            in  "ChB %*d,%*d";
+            in  "ChA %*d,%*d";
+          }
+limitcl   { out "$\$1:SYST:COMP?";
+            in  "ChD %*d,%*d";
+            in  "ChC %*d,%d";
+            in  "ChB %*d,%*d";
+            in  "ChA %*d,%*d";
+          }
+limitdh   { out "$\$1:SYST:COMP?";
+            in  "ChD %d,%*d";
+            in  "ChC %*d,%*d";
+            in  "ChB %*d,%*d";
+            in  "ChA %*d,%*d";
+          }
+limitdl   { out "$\$1:SYST:COMP?";
+            in  "ChD %*d,%d";
+            in  "ChC %*d,%*d";
+            in  "ChB %*d,%*d";
+            in  "ChA %*d,%*d";
+          }
+setwindow { out "$\$1:SYST:INTL %{4|8|16|32|64}";
+            in  "New INTL:";
+          }
+window    { out "$\$1:SYST:INTL?"; 
+            in  "MVSL: %{4|8|16|32|64}";
+          }
+#
+# Status
+#
+# Note: The response from the *CLS command is wierd
+# in that it has an embedded CR after P3_P4_P0:
+# but no terminator at all at after the final digit of XXYYZZ
+# A dummy command with a short response is issued (SYS:ERR), the
+# response of which provides a LF terminator - it all seems to work!
+# Without the terminator, the protocol continually times out.
+#
+sta      { 
+            out "$\$1*CLS"; 
+            wait 200;
+            out "$\$1:SYST:ERR?";
+            in  "P3_P4_P0:\r%*s";
+          }
+sta1      { 
+            out "$\$1*CLS"; 
+            wait 200;
+            out "$\$1:SYST:ERR?";
+            in  "P3_P4_P0:\r%2r%*s";
+          }
+sta2      { 
+            out "$\$1*CLS"; 
+            wait 200;
+            out "$\$1:SYST:ERR?";
+            in  "P3_P4_P0:\r\?\?%2r%*s";
+          }
+sta3      { 
+            out "$\$1*CLS";
+            wait 200;
+            out "$\$1:SYST:ERR?";
+            in  "P3_P4_P0:\r\?\?\?\?%2r%*s";
+          }
+#
+# Identification
+#
+serial    { 
+            #InTerminator = CR LF;
+            out "$\$1*IDN?";
+            # Remove leading CR LF - these are apparent but not documented
+            in "%*s\r";
+            # NB: Documentation does not mention an 'n' after LoCuM4 but is observed
+            in  "\"LoCuM4n,Version \?.\?\?,Address \?\?,\#%d\"\r";
+          }
+idn       { out "$\$1*IDN?";
+            # Remove leading CR LF - these are apparent but not documented
+            in  "%*s\r";
+            in  "%s\r";
+          }
+#
+# Reset
+#
+reset     { out "$\$1*RST";
+            in  "Reset";
+          }
+#
+# Rectified channel peak value
+#
+peak      { out "$\$1:MEAS:\$2";
+            in  "\$2 %d";
+          }
+
+#################################################################################

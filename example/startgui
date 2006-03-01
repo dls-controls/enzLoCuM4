@@ -1,0 +1,3 @@
+#!/bin/sh
+export EDMDATAFILES=../enzLoCuM4App/opi/edl:.
+edm -x -eolc -m device=TS-DI-PBPM-01 enzLoCuM4.edl &
