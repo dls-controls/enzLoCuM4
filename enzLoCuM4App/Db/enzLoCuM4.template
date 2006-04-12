@@ -2,6 +2,12 @@
 # Template database for an ENZ LoCuM-4 Low Current Monitor
 # Pete Owens - 2-12-05
 #
+# $Author: $
+# $Date: $
+# $Id: $
+# $Name: $
+# $Revision: $
+#
 # substitutions:
 # device  - device name
 # port    - serial port on IOC (steam device code ie /ty/0/1 => ty_0_1)
