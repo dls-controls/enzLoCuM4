@@ -3,6 +3,11 @@
 # Pete Owens 2-12-05
 # Ian Gillingham 12-04-06
 #
+# $Author: $
+# $Date: $
+# $Id: $
+# $Name: $
+# $Revision: $
 
 #terminator   = CR;
 terminator   = LF;
