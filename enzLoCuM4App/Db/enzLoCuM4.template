@@ -59,11 +59,12 @@ record(mbbi, "$(device):BIASV")
     field(DTYP, "stream")
     field(INP,  "@enzLoCuM4.protocol biasv($(adr)) $(port) 0")
     #field(SCAN, "2 second")
-    field(SCAN, "5 second")
+    field(SCAN, "I/O Intr")
     field(ZRST, "Plus")
     field(ONST, "Minus")
     field(TWST, "External")
     field(THST, "Ground")
+    field(FRST, "Err")
 }
 #
 #% controldesk Bias Voltage Source setpoint
@@ -89,7 +90,7 @@ record(bi, "$(device):HV")
     field(DESC, "HV")
     field(DTYP, "stream")
     field(INP,  "@enzLoCuM4.protocol hv($(adr)) $(port) 0")
-    field(SCAN, "10 second")
+    field(SCAN, "I/O Intr")
     field(ZNAM, "Off")
     field(ONAM, "On")
 }
@@ -104,7 +105,7 @@ record(bi, "$(device):EXT")
     field(DESC, "Ext")
     field(DTYP, "stream")
     field(INP,  "@enzLoCuM4.protocol ext($(adr)) $(port) 0")
-    field(SCAN, "10 second")
+    field(SCAN, "I/O Intr")
     field(ZNAM, "Off")
     field(ONAM, "On")
 }
@@ -119,7 +120,7 @@ record(bi, "$(device):BIAS")
     field(DESC, "Bias")
     field(DTYP, "stream")
     field(INP,  "@enzLoCuM4.protocol bias($(adr)) $(port) 0")
-    field(SCAN, "10 second")
+    field(SCAN, "I/O Intr")
     field(ZNAM, "Off")
     field(ONAM, "On")
 }
@@ -134,7 +135,7 @@ record(bi, "$(device):AUTO")
     field(DESC, "Auto")
     field(DTYP, "stream")
     field(INP,  "@enzLoCuM4.protocol auto($(adr)) $(port) 0")
-    field(SCAN, "10 second")
+    field(SCAN, "I/O Intr")
     field(ZNAM, "Off")
     field(ONAM, "On")
 }
@@ -199,7 +200,7 @@ record(longin, "$(device):CHA:LO")
     field(DESC, "Low Limit A")
     field(DTYP, "stream")
     field(INP,  "@enzLoCuM4.protocol limital($(adr)) $(port) 0")
-    field(SCAN, "5 second")
+    field(SCAN, "I/O Intr")
     field(FLNK, "$(device):CHA:CALHI")
     field(EGU,  "mV")
     field(HOPR, "1000")
@@ -251,7 +252,7 @@ record(longin, "$(device):CHB:HI")
     field(DESC, "High Limit B")
     field(DTYP, "stream")
     field(INP,  "@enzLoCuM4.protocol limitbh($(adr)) $(port) 0")
-    field(SCAN, "5 second")
+    field(SCAN, "I/O Intr")
     field(FLNK, "$(device):CHB:CALLO")
     field(EGU,  "mV")
     field(HOPR, "10000")
@@ -289,7 +290,7 @@ record(longin, "$(device):CHB:LO")
     field(DESC, "Low Limit B")
     field(DTYP, "stream")
     field(INP,  "@enzLoCuM4.protocol limitbl($(adr)) $(port) 0")
-    field(SCAN, "5 second")
+    field(SCAN, "I/O Intr")
     field(FLNK, "$(device):CHB:CALHI")
     field(EGU,  "mV")
     field(HOPR, "1000")
@@ -341,7 +342,7 @@ record(longin, "$(device):CHC:HI")
     field(DESC, "High Limit C")
     field(DTYP, "stream")
     field(INP,  "@enzLoCuM4.protocol limitch($(adr)) $(port) 0")
-    field(SCAN, "5 second")
+    field(SCAN, "I/O Intr")
     field(FLNK, "$(device):CHC:CALLO")
     field(EGU,  "mV")
     field(HOPR, "10000")
@@ -379,7 +380,7 @@ record(longin, "$(device):CHC:LO")
     field(DESC, "Low Limit C")
     field(DTYP, "stream")
     field(INP,  "@enzLoCuM4.protocol limitcl($(adr)) $(port) 0")
-    field(SCAN, "5 second")
+    field(SCAN, "I/O Intr")
     field(FLNK, "$(device):CHC:CALHI")
     field(EGU,  "mV")
     field(HOPR, "1000")
@@ -431,7 +432,7 @@ record(longin, "$(device):CHD:HI")
     field(DESC, "High Limit D")
     field(DTYP, "stream")
     field(INP,  "@enzLoCuM4.protocol limitdh($(adr)) $(port) 0")
-    field(SCAN, "5 second")
+    field(SCAN, "I/O Intr")
     field(FLNK, "$(device):CHD:CALLO")
     field(EGU,  "mV")
     field(HOPR, "10000")
@@ -469,7 +470,7 @@ record(longin, "$(device):CHD:LO")
     field(DESC, "Low Limit D")
     field(DTYP, "stream")
     field(INP,  "@enzLoCuM4.protocol limitdl($(adr)) $(port) 0")
-    field(SCAN, "5 second")
+    field(SCAN, "I/O Intr")
     field(FLNK, "$(device):CHD:CALHI")
     field(EGU,  "mV")
     field(HOPR, "1000")
@@ -549,14 +550,17 @@ record(mbbo, "$(device):SETWINDOW")
 # Front Panel Switches
 #
 record(longin, "$(device):RAWFP")
+#record(stringin, "$(device):RAWFP")
 {
     field(DTYP, "stream")
     field(INP,  "@enzLoCuM4.protocol sta1($(adr)) $(port) 0")
+    field(SCAN, "2 second")
 }
 record(calc, "$(device):CALFP")
 {
     field(CALC, "((A-12336)|(A-12336>>4))&255")
-    field(INPA, "$(device):RAWFP PP")
+    #field(INPA, "$(device):RAWFP PP")
+    field(INPA, "$(device):RAWFP")
 }
 #
 #% archiver 5 Monitor
@@ -572,14 +576,17 @@ record(mbbiDirect, "$(device):FP")
 # Measuring Range
 #
 record(longin, "$(device):RAWMR")
+#record(stringin, "$(device):RAWMR")
 {
     field(DTYP, "stream")
     field(INP,  "@enzLoCuM4.protocol sta2($(adr)) $(port) 0")
+    field(SCAN, "I/O Intr")
 }
 record(calc, "$(device):CALMR")
 {
     field(CALC, "((A-12336)|(A-12336>>4))&255")
-    field(INPA, "$(device):RAWMR PP")
+    #field(INPA, "$(device):RAWMR PP")
+    field(INPA, "$(device):RAWMR")
 }
 #
 #% archiver 5 Monitor
@@ -595,14 +602,17 @@ record(mbbiDirect, "$(device):MR")
 # Automatic Ranging
 #
 record(longin, "$(device):RAWAR")
+#record(stringin, "$(device):RAWAR")
 {
     field(DTYP, "stream")
     field(INP,  "@enzLoCuM4.protocol sta3($(adr)) $(port) 0")
+    field(SCAN, "I/O Intr")
 }
 record(calc, "$(device):CALAR")
 {
     field(CALC, "((A-12336)|(A-12336>>4))&255")
-    field(INPA, "$(device):RAWAR PP")
+    #field(INPA, "$(device):RAWAR PP")
+    field(INPA, "$(device):RAWAR")
 }
 #
 #% archiver 5 Monitor
@@ -705,12 +715,12 @@ record(longin, "$(device):CHD:PEAK")
     field(EGU,  "mV")
 }
 
-record(stringin, "$(device):TEST")
-{
-    field(DESC, "Test record")
-    field(DTYP, "stream")
-    field(INP,  "@enzLoCuM4.protocol test($(adr)) $(port) 0")
-    field(SCAN, "10 second")
-}
+#record(stringin, "$(device):TEST")
+#{
+#    field(DESC, "Test record")
+#    field(DTYP, "stream")
+#    field(INP,  "@enzLoCuM4.protocol test($(adr)) $(port) 0")
+#    field(SCAN, "I/O Intr")
+#}
 
 ################################################################################
