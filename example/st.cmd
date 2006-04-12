@@ -9,7 +9,7 @@
 
 #enzTop = "/home/pho76/diamond/enzLoCuM4"
 enzTop  = "/home/diamond/R3.13.9/work/support/enzLoCuM4/Rx-y"
-diamondTop = "/home/diamond/R3.13.9/work/support/superTop/Rx-y"
+diamondTop = "/home/diamond/R3.13.9/prod/support/superTop/Rx-y"
 
 IPSLOTA = 0
 IPSLOTB = 1
@@ -91,7 +91,7 @@ strcat (STREAM_PROTOCOL_DIR, "/enzLoCuM4App/protocol")
 
 ty_enz_3_streamBus = "Tty"
 
-streamTtyDebug = 1
+streamTtyDebug = 0
 
 ###########################################################
 # Load the databases & start the IOC
