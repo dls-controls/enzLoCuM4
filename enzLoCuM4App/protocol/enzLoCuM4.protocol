@@ -1,13 +1,15 @@
 # enzLoCuM4.protocol
 # Stream Device Protocol for an ENZ LoCuM-4 Low Current Monitor
 # Pete Owens 2-12-05
+# Ian Gillingham 12-04-06
 #
 
 #terminator   = CR;
 terminator   = LF;
-buffersize   = 100;
+buffersize   = 500;
 replytimeout = 5000;
-readtimeout  = 5000;
+locktimeout  = 10000;
+readtimeout  = 7000;
 extrainput   = Ignore;
 
 #
@@ -18,47 +20,44 @@ setbiasv  { out "$\$1:CONF:BIAS:SOURCE %{PLUS|MINUS|EXT|DEF}"; }
 range     { out "$\$1:CONF?";
             in  "\"S1_%{100pA|1nA|10nA|100nA|1\xb5A|10\xb5A|100\xb5A|1mA|Auto|Err}"; 
           }
-biasv     { out "$\$1:CONF?";
-#            in  "\"S1_%*{100pA|1nA|10nA|100nA|1\xb5A|10\xb5A|100\xb5A|1mA|Auto|Err},"
-             in  "\"S1_\?\?\?%*{,|\?,|\?A,}"
-                 "S2_%{Plus|Minus|Ext|0Volt}" ; 
+biasv     { # Scanned by I/O Intr after write from range protocol
+            in  "\"S1_\?\?\?%*{,|\?,|\?A,}"
+                "S2_%{Plus|Minus|Ext|0Volt|Err}" ; 
           }
-hv        { out "$\$1:CONF?";
-            in  "\"S1_%*{100pA|1nA|10nA|100nA|1\xb5A|10\xb5A|100\xb5A|1mA|Auto|Err},"
-                "S2_%*{Plus|Minus|Ext|0Volt}," 
+hv        { # Scanned by I/O Intr after write from range protocol
+            in  "\"S1_\?\?\?%*{,|\?,|\?A,}"
+                "S2_%*{Plus|Minus|Ext|0Volt|Err}," 
                 "HV_%{OFF|ON}" ; 
           }
-ext       { out "$\$1:CONF?";
-            in  "\"S1_%*{100pA|1nA|10nA|100nA|1\xb5A|10\xb5A|100\xb5A|1mA|Auto|Err},"
-                "S2_%*{Plus|Minus|Ext|0Volt}," 
+ext       { # Scanned by I/O Intr after write from range protocol
+            in  "\"S1_\?\?\?%*{,|\?,|\?A,}"
+                "S2_%*{Plus|Minus|Ext|0Volt|Err}," 
                 "HV_%*{OFF|ON},"
                 "Ext_%{OFF|ON}" ; 
           }
-bias      { out "$\$1:CONF?";
-            in  "\"S1_%*{100pA|1nA|10nA|100nA|1\xb5A|10\xb5A|100\xb5A|1mA|Auto|Err},"
-                "S2_%*{Plus|Minus|Ext|0Volt}," 
+bias      { # Scanned by I/O Intr after write from range protocol
+            in  "\"S1_\?\?\?%*{,|\?,|\?A,}"
+                "S2_%*{Plus|Minus|Ext|0Volt|Err}," 
                 "HV_%*{OFF|ON},"
                 "Ext_%*{OFF|ON}," 
                 "Bias\?_%{OFF|ON}" ; 
           }
-auto      { out "$\$1:CONF?";
-            in  "\"S1_%*{100pA|1nA|10nA|100nA|1\xb5A|10\xb5A|100\xb5A|1mA|Auto|Err},"
-                "S2_%*{Plus|Minus|Ext|0Volt}," 
+auto      { # Scanned by I/O Intr after write from range protocol
+            in  "\"S1_\?\?\?%*{,|\?,|\?A,}"
+                "S2_%*{Plus|Minus|Ext|0Volt|Err}," 
                 "HV_%*{OFF|ON},"
                 "Ext_%*{OFF|ON}," 
                 "Bias\?_%*{OFF|ON},"
                 "Auto_%{OFF|ON}" ; 
           }
 
-test     { out "$\$1:CONF?";
-           in  "%s";
-         }
- 
 
 #
 # System-related Commands
 #
-error     { out "$\$1:SYST:ERR?";
+error     { 
+			#Separator = "\"";
+			out "$\$1:SYST:ERR?";
             in  "\"%s\"";
           }
 version   { out "$\$1:SYST:VERS?";
@@ -68,58 +67,58 @@ limit     { out "$\$1:SYST:COMP:\$3:\$2 %04d";
             in  "Comp_\$3_Ch\$2";
           }
 limitah   { out "$\$1:SYST:COMP?";
-            in  "ChD %*d,%*d";
-            in  "ChC %*d,%*d";
-            in  "ChB %*d,%*d";
-            in  "ChA %d,%*d";
+            in  "\"ChD %*d,%*d\"";
+            in  "\"ChC %*d,%*d\"";
+            in  "\"ChB %*d,%*d\"";
+            in  "\"ChA %d,%*d\"";
           }
-limital   { out "$\$1:SYST:COMP?";
-            in  "ChD %*d,%*d";
-            in  "ChC %*d,%*d";
-            in  "ChB %*d,%*d";
-            in  "ChA %*d,%d";
+limital   { #out "$\$1:SYST:COMP?";
+            in  "\"ChD %*d,%*d\"";
+            in  "\"ChC %*d,%*d\"";
+            in  "\"ChB %*d,%*d\"";
+            in  "\"ChA %*d,%d\"";
           }
-limitbh   { out "$\$1:SYST:COMP?";
-            in  "ChD %*d,%*d";
-            in  "ChC %*d,%*d";
-            in  "ChB %d,%*d";
-            in  "ChA %*d,%*d";
+limitbh   { #out "$\$1:SYST:COMP?";
+            in  "\"ChD %*d,%*d\"";
+            in  "\"ChC %*d,%*d\"";
+            in  "\"ChB %d,%*d\"";
+            in  "\"ChA %*d,%*d\"";
           }
-limitbl   { out "$\$1:SYST:COMP?";
-            in  "ChD %*d,%*d";
-            in  "ChC %*d,%*d";
-            in  "ChB %*d,%d";
-            in  "ChA %*d,%*d";
+limitbl   { #out "$\$1:SYST:COMP?";
+            in  "\"ChD %*d,%*d\"";
+            in  "\"ChC %*d,%*d\"";
+            in  "\"ChB %*d,%d\"";
+            in  "\"ChA %*d,%*d\"";
           }
-limitch   { out "$\$1:SYST:COMP?";
-            in  "ChD %*d,%*d";
-            in  "ChC %d,%*d";
-            in  "ChB %*d,%*d";
-            in  "ChA %*d,%*d";
+limitch   { #out "$\$1:SYST:COMP?";
+            in  "\"ChD %*d,%*d\"";
+            in  "\"ChC %d,%*d\"";
+            in  "\"ChB %*d,%*d\"";
+            in  "\"ChA %*d,%*d\"";
           }
-limitcl   { out "$\$1:SYST:COMP?";
-            in  "ChD %*d,%*d";
-            in  "ChC %*d,%d";
-            in  "ChB %*d,%*d";
-            in  "ChA %*d,%*d";
+limitcl   { #out "$\$1:SYST:COMP?";
+            in  "\"ChD %*d,%*d\"";
+            in  "\"ChC %*d,%d\"";
+            in  "\"ChB %*d,%*d\"";
+            in  "\"ChA %*d,%*d\"";
           }
-limitdh   { out "$\$1:SYST:COMP?";
-            in  "ChD %d,%*d";
-            in  "ChC %*d,%*d";
-            in  "ChB %*d,%*d";
-            in  "ChA %*d,%*d";
+limitdh   { #out "$\$1:SYST:COMP?";
+            in  "\"ChD %d,%*d\"";
+            in  "\"ChC %*d,%*d\"";
+            in  "\"ChB %*d,%*d\"";
+            in  "\"ChA %*d,%*d\"";
           }
-limitdl   { out "$\$1:SYST:COMP?";
-            in  "ChD %*d,%d";
-            in  "ChC %*d,%*d";
-            in  "ChB %*d,%*d";
-            in  "ChA %*d,%*d";
+limitdl   { #out "$\$1:SYST:COMP?";
+            in  "\"ChD %*d,%d\"";
+            in  "\"ChC %*d,%*d\"";
+            in  "\"ChB %*d,%*d\"";
+            in  "\"ChA %*d,%*d\"";
           }
 setwindow { out "$\$1:SYST:INTL %{4|8|16|32|64}";
-            in  "New INTL:";
+            in  "New INTL: %*s";
           }
 window    { out "$\$1:SYST:INTL?"; 
-            in  "MVSL: %{4|8|16|32|64}";
+            in  "\"MVSL: %{04|08|16|32|64}\"";
           }
 #
 # Status
@@ -132,29 +131,39 @@ window    { out "$\$1:SYST:INTL?";
 # Without the terminator, the protocol continually times out.
 #
 sta      { 
+			InTerminator = "";
             out "$\$1*CLS"; 
-            wait 200;
-            out "$\$1:SYST:ERR?";
-            in  "P3_P4_P0:\r%*s";
+            in  "P3_P4_P0:\?%*s";
           }
-sta1      { 
+sta1      { # FP
+			InTerminator = "";
+			readtimeout  = 50;
             out "$\$1*CLS"; 
-            wait 200;
+            in  "P3_P4_P0:\?%2r\?\?\?\?";
             out "$\$1:SYST:ERR?";
-            in  "P3_P4_P0:\r%2r%*s";
+            in "%*s";
           }
-sta2      { 
-            out "$\$1*CLS"; 
-            wait 200;
-            out "$\$1:SYST:ERR?";
-            in  "P3_P4_P0:\r\?\?%2r%*s";
+sta2      { # MR
+			InTerminator = "";
+			readtimeout  = 50;
+            #out "$\$1*CLS"; 
+            in  "P3_P4_P0:\?\?\?%2r\?\?";
           }
-sta3      { 
-            out "$\$1*CLS";
-            wait 200;
-            out "$\$1:SYST:ERR?";
-            in  "P3_P4_P0:\r\?\?\?\?%2r%*s";
+sta3      { # AR
+			InTerminator = "";
+			readtimeout  = 50;
+            #out "$\$1*CLS";
+            in  "P3_P4_P0:\?\?\?\?\?%2r";
           }
+
+test     { 
+			InTerminator = "";
+			readtimeout  = 50;
+			#out "$\$1:CONF?";
+            #out "$\$1*CLS"; 
+           	in  "\?%6c";
+         }
+ 
 #
 # Identification
 #
@@ -181,7 +190,7 @@ reset     { out "$\$1*RST";
 # Rectified channel peak value
 #
 peak      { out "$\$1:MEAS:\$2";
-            in  "\$2 %d";
+            in  "\"\$2 %d\"";
           }
 
 #################################################################################
