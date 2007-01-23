@@ -2,11 +2,11 @@
 # Template database for an ENZ LoCuM-4 Low Current Monitor
 # Pete Owens - 2-12-05
 #
-# $Author: $
-# $Date: $
-# $Id: $
+# $Author$
+# $Date$
+# $Id$
 # $Name: $
-# $Revision: $
+# $Revision$
 #
 # substitutions:
 # device  - device name
@@ -157,6 +157,31 @@ record(stringin, "$(device):ERR")
 }
 ################################################################################
 # Limits
+
+#
+# Read all limits in one go. Then fanout to the HI signals
+#
+#
+
+record(calcout, "$(device):LIMITS")
+{
+    field(DESC, "Read all limits")
+    field(DTYP, "stream")
+    field(OUT,  "@enzLoCuM4.protocol limits($(adr)) $(port) 0")
+    field(SCAN, "5 second")
+    field(FLNK, "$(device):FANLIMITS")
+}
+
+record(fanout, "$(device):FANLIMITS")
+{
+    field(DESC, "Fanout limit changes")
+    field(LNK1, "$(device):CHA:HI")
+    field(LNK2, "$(device):CHB:HI")
+    field(LNK3, "$(device):CHC:HI")
+    field(LNK4, "$(device):CHD:HI")
+}
+
+
 #
 # Channel A
 #
@@ -166,9 +191,7 @@ record(stringin, "$(device):ERR")
 record(longin, "$(device):CHA:HI")
 {
     field(DESC, "High Limit A")
-    field(DTYP, "stream")
-    field(INP,  "@enzLoCuM4.protocol limitah($(adr)) $(port) 0")
-    field(SCAN, "5 second")
+    field(INP,  "$(device):LIMITS.A")
     field(FLNK, "$(device):CHA:CALLO")
     field(EGU,  "mV")
     field(HOPR, "10000")
@@ -204,9 +227,7 @@ record(longout, "$(device):CHA:SETHI")
 record(longin, "$(device):CHA:LO")
 {
     field(DESC, "Low Limit A")
-    field(DTYP, "stream")
-    field(INP,  "@enzLoCuM4.protocol limital($(adr)) $(port) 0")
-    field(SCAN, "I/O Intr")
+    field(INP,  "$(device):LIMITS.B")
     field(FLNK, "$(device):CHA:CALHI")
     field(EGU,  "mV")
     field(HOPR, "1000")
@@ -256,9 +277,7 @@ record(calcout, "$(device):CHA:CALLO")
 record(longin, "$(device):CHB:HI")
 {
     field(DESC, "High Limit B")
-    field(DTYP, "stream")
-    field(INP,  "@enzLoCuM4.protocol limitbh($(adr)) $(port) 0")
-    field(SCAN, "I/O Intr")
+    field(INP,  "$(device):LIMITS.C")
     field(FLNK, "$(device):CHB:CALLO")
     field(EGU,  "mV")
     field(HOPR, "10000")
@@ -294,9 +313,7 @@ record(longout, "$(device):CHB:SETHI")
 record(longin, "$(device):CHB:LO")
 {
     field(DESC, "Low Limit B")
-    field(DTYP, "stream")
-    field(INP,  "@enzLoCuM4.protocol limitbl($(adr)) $(port) 0")
-    field(SCAN, "I/O Intr")
+    field(INP,  "$(device):LIMITS.D")
     field(FLNK, "$(device):CHB:CALHI")
     field(EGU,  "mV")
     field(HOPR, "1000")
@@ -346,9 +363,7 @@ record(calcout, "$(device):CHB:CALLO")
 record(longin, "$(device):CHC:HI")
 {
     field(DESC, "High Limit C")
-    field(DTYP, "stream")
-    field(INP,  "@enzLoCuM4.protocol limitch($(adr)) $(port) 0")
-    field(SCAN, "I/O Intr")
+    field(INP,  "$(device):LIMITS.E")
     field(FLNK, "$(device):CHC:CALLO")
     field(EGU,  "mV")
     field(HOPR, "10000")
@@ -384,9 +399,7 @@ record(longout, "$(device):CHC:SETHI")
 record(longin, "$(device):CHC:LO")
 {
     field(DESC, "Low Limit C")
-    field(DTYP, "stream")
-    field(INP,  "@enzLoCuM4.protocol limitcl($(adr)) $(port) 0")
-    field(SCAN, "I/O Intr")
+    field(INP,  "$(device):LIMITS.F")
     field(FLNK, "$(device):CHC:CALHI")
     field(EGU,  "mV")
     field(HOPR, "1000")
@@ -436,9 +449,7 @@ record(calcout, "$(device):CHC:CALLO")
 record(longin, "$(device):CHD:HI")
 {
     field(DESC, "High Limit D")
-    field(DTYP, "stream")
-    field(INP,  "@enzLoCuM4.protocol limitdh($(adr)) $(port) 0")
-    field(SCAN, "I/O Intr")
+    field(INP,  "$(device):LIMITS.G")
     field(FLNK, "$(device):CHD:CALLO")
     field(EGU,  "mV")
     field(HOPR, "10000")
@@ -474,9 +485,7 @@ record(longout, "$(device):CHD:SETHI")
 record(longin, "$(device):CHD:LO")
 {
     field(DESC, "Low Limit D")
-    field(DTYP, "stream")
-    field(INP,  "@enzLoCuM4.protocol limitdl($(adr)) $(port) 0")
-    field(SCAN, "I/O Intr")
+    field(INP,  "$(device):LIMITS.H")
     field(FLNK, "$(device):CHD:CALHI")
     field(EGU,  "mV")
     field(HOPR, "1000")

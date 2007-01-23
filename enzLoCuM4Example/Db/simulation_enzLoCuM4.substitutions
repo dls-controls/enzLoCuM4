@@ -1,0 +1,16 @@
+#################################################################
+# simulation_enzLoCuM4.substitutions
+# Initialise templates for a simulated ENZ LoCuM-4 Low Current monitor
+# Pete Owens - 2/12/05
+#
+# substitutions:
+# device  - device name
+# port    - serial port (steam device code ie /ty/0/1 => ty_0_1)
+# adr     - address (01 - 99)
+#################################################################
+file simulation_enzLoCuM4.template
+{ 
+pattern { device           ,  port    , adr }
+        { BLTST-DI-PBPM-01 , ty_enz_3 , 01  }
+}
+#################################################################

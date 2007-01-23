@@ -1,0 +1,39 @@
+#################################################################
+# enzLoCuM4.substitutions
+# Initialise templates for an ENZ LoCuM-4 Low Current monitor
+# Pete Owens - 2/12/05
+#
+# substitutions:
+# device  - device name
+# port    - serial port (steam device code ie /ty/0/1 => ty_0_1)
+# adr     - address (01 - 99)
+#################################################################
+
+file enzLoCuM4.template
+{
+pattern { device           ,  port   , adr }
+        { BLTST-DI-PBPM-01 , ty_40_1 , 01  }
+}
+#################################################################
+# substitutions:
+# device       - device name
+# blade_a_card - card for channel A
+# blade_a_chan - channel for channel A
+# blade_b_card - card for channel B
+# blade_b_chan - channel for channel B
+# blade_c_card - card for channel C
+# blade_c_chan - channel for channel C
+# blade_d_card - card for channel D
+# blade_d_chan - channel for channel D
+#################################################################
+file enzLoCuM4Readback.template
+{
+pattern {    device,
+              blade_a_card, blade_a_chan,
+              blade_b_card, blade_b_chan,
+              blade_c_card, blade_c_chan,
+              blade_d_card, blade_d_chan,
+                  }
+        { BLTST-DI-PBPM-01, 50, 0, 50, 1, 50, 2, 50, 3}
+}
+

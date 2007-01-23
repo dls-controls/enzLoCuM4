@@ -18,6 +18,11 @@
 #include "errno.h"
 #include "math.h"
 
+#ifdef ABOVE_EPICS_R3_13
+#include "recGbl.h"
+#include "epicsExport.h"
+#endif
+
 #define PLUS_MINUS '\xb1'
 #define MU '\xb5'
 
@@ -617,7 +622,7 @@ taskDelay (600);
     }
 */
 }
-chars ()
+void chars ()
 {
 char i;
 for (i=0;i<0xff;i++)
@@ -625,3 +630,9 @@ printf ("%02x : %c\n",i,i);
 }
 /*******************************************************************************
 */
+#ifdef ABOVE_EPICS_R3_13
+/* No functions currently registered ... */
+/* epicsRegisterFunction(); */
+#endif
+
+
