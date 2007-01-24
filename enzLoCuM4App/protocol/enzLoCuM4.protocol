@@ -20,8 +20,17 @@ extrainput   = Ignore;
 #
 # Configuration
 # 
-setrange  { out '$\$1:CONF:CURR:DC %{1E-10|1E-09|1E-08|1E-07|1E-06|1E-05|1E-04|1E-03|DEF}'; }
-setbiasv  { out '$\$1:CONF:BIAS:SOURCE %{PLUS|MINUS|EXT|DEF}'; }
+setrange  { out '$\$1:CONF:CURR:DC %{1E-10|1E-09|1E-08|1E-07|1E-06|1E-05|1E-04|1E-03|DEF}';
+            @init {out '$\$1:CONF?';
+                   in  '\"S1_%{100pA|1nA|10nA|100nA|1\xb5A|10\xb5A|100\xb5A|1mA|Auto|Err}';
+                  }
+          }
+setbiasv  { out '$\$1:CONF:BIAS:SOURCE %{PLUS|MINUS|EXT|DEF}';
+            @init {out '$\$1:CONF?';
+                   in  '\"S1_%*{100pA|1nA|10nA|100nA|1\xb5A|10\xb5A|100\xb5A|1mA|Auto|Err},'
+                       'S2_%{Plus|Minus|Ext|0Volt|Err}';
+                  }
+          }
 range     { out '$\$1:CONF?';
             in  '\"S1_%{100pA|1nA|10nA|100nA|1\xb5A|10\xb5A|100\xb5A|1mA|Auto|Err}'; 
           }
@@ -70,7 +79,7 @@ version   { out '$\$1:SYST:VERS?';
             in  '\"SCPI_ENZ_%f\"';
           }
 limit     { out '$\$1:SYST:COMP:\$3:\$2 %04d';
-            in  'Comp_\$3_Ch\$2';
+            in  '"COMP_\$3_\$2"';
           }
 limits    { out '$\$1:SYST:COMP?';
             in  '\"ChD %(G)d,%(H)d\"';
@@ -128,6 +137,9 @@ limitdl   { #out '$\$1:SYST:COMP?';
           }
 setwindow { out '$\$1:SYST:INTL %{4|8|16|32|64}';
             in  '"New INTL: %*s"';
+            @init { out '$\$1:SYST:INTL?';
+                    in  '\"MVSL: %{04|08|16|32|64}\"';
+                  }
           }
 window    { out '$\$1:SYST:INTL?'; 
             in  '\"MVSL: %{04|08|16|32|64}\"';
@@ -196,7 +208,7 @@ idn       { out '$\$1*IDN?';
 # Reset
 #
 reset     { out '$\$1*RST';
-            in  'Reset';
+            in  '"Reset"';
           }
 #
 # Rectified channel peak value

@@ -3,8 +3,8 @@ beginScreenProperties
 major 4
 minor 0
 release 1
-x 450
-y 69
+x 912
+y 630
 w 350
 h 350
 font "arial-medium-r-16.0"
@@ -22,6 +22,7 @@ botShadowColor index 11
 title "ENZ LoCuM-4 Low Current Monitor - $(device)"
 showGrid
 snapToGrid
+gridSize 5
 endScreenProperties
 
 # (Rectangle)
@@ -31,9 +32,9 @@ major 4
 minor 0
 release 0
 x 10
-y 190
+y 40
 w 330
-h 110
+h 150
 lineColor index 6
 fillColor index 3
 endObjectProperties
@@ -45,9 +46,9 @@ major 4
 minor 0
 release 0
 x 10
-y 40
+y 205
 w 330
-h 130
+h 85
 lineColor index 6
 fillColor index 3
 endObjectProperties
@@ -94,7 +95,7 @@ beginObjectProperties
 major 4
 minor 1
 release 0
-x 260
+x 255
 y 310
 w 80
 h 30
@@ -113,7 +114,7 @@ beginObjectProperties
 major 4
 minor 2
 release 0
-x 170
+x 165
 y 310
 w 80
 h 30
@@ -136,8 +137,8 @@ beginObjectProperties
 major 4
 minor 1
 release 0
-x 30
-y 90
+x 20
+y 80
 w 51
 h 16
 font "arial-medium-r-14.0"
@@ -156,8 +157,8 @@ beginObjectProperties
 major 4
 minor 1
 release 0
-x 260
-y 90
+x 280
+y 85
 w 49
 h 16
 font "arial-medium-r-14.0"
@@ -176,8 +177,8 @@ beginObjectProperties
 major 4
 minor 1
 release 0
-x 260
-y 130
+x 280
+y 165
 w 50
 h 16
 font "arial-medium-r-14.0"
@@ -196,8 +197,8 @@ beginObjectProperties
 major 4
 minor 1
 release 0
-x 30
-y 130
+x 20
+y 165
 w 50
 h 16
 font "arial-medium-r-14.0"
@@ -216,18 +217,20 @@ beginObjectProperties
 major 4
 minor 1
 release 0
-x 90
-y 90
-w 70
-h 17
+x 15
+y 105
+w 120
+h 20
 controlPv "$(device):BLADEA"
+format "exponential"
 font "arial-medium-r-16.0"
 fgColor index 16
+fgAlarm
 bgColor index 10
-autoHeight
 limitsFromDb
 nullColor index 18
 useHexPrefix
+showUnits
 useAlarmBorder
 newPos
 objType "monitors"
@@ -239,18 +242,21 @@ beginObjectProperties
 major 4
 minor 1
 release 0
-x 180
-y 90
-w 70
+x 215
+y 105
+w 120
 h 20
 controlPv "$(device):BLADEB"
+format "exponential"
 font "arial-medium-r-16.0"
 fgColor index 16
+fgAlarm
 bgColor index 10
-autoHeight
 limitsFromDb
 nullColor index 18
 useHexPrefix
+showUnits
+useAlarmBorder
 newPos
 objType "monitors"
 endObjectProperties
@@ -261,18 +267,21 @@ beginObjectProperties
 major 4
 minor 1
 release 0
-x 180
-y 130
-w 70
-h 17
+x 215
+y 140
+w 120
+h 20
 controlPv "$(device):BLADEC"
+format "exponential"
 font "arial-medium-r-16.0"
 fgColor index 16
+fgAlarm
 bgColor index 10
-autoHeight
 limitsFromDb
 nullColor index 18
 useHexPrefix
+showUnits
+useAlarmBorder
 newPos
 objType "monitors"
 endObjectProperties
@@ -283,18 +292,21 @@ beginObjectProperties
 major 4
 minor 1
 release 0
-x 90
-y 130
-w 70
-h 17
+x 15
+y 140
+w 120
+h 20
 controlPv "$(device):BLADED"
+format "exponential"
 font "arial-medium-r-16.0"
 fgColor index 16
+fgAlarm
 bgColor index 10
-autoHeight
 limitsFromDb
 nullColor index 18
 useHexPrefix
+showUnits
+useAlarmBorder
 newPos
 objType "monitors"
 endObjectProperties
@@ -306,7 +318,7 @@ major 4
 minor 1
 release 0
 x 20
-y 210
+y 215
 w 50
 h 16
 font "arial-medium-r-14.0"
@@ -326,7 +338,7 @@ major 4
 minor 1
 release 0
 x 190
-y 210
+y 215
 w 49
 h 16
 font "arial-medium-r-14.0"
@@ -386,7 +398,7 @@ major 4
 minor 1
 release 0
 x 90
-y 210
+y 215
 w 70
 h 17
 controlPv "$(device):KX"
@@ -410,7 +422,7 @@ major 4
 minor 1
 release 0
 x 20
-y 270
+y 265
 w 65
 h 16
 font "arial-medium-r-14.0"
@@ -430,7 +442,7 @@ major 4
 minor 1
 release 0
 x 190
-y 270
+y 265
 w 64
 h 16
 font "arial-medium-r-14.0"
@@ -449,8 +461,8 @@ beginObjectProperties
 major 4
 minor 1
 release 0
-x 20
-y 60
+x 70
+y 55
 w 114
 h 16
 font "arial-medium-r-14.0"
@@ -469,7 +481,7 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 150
+x 200
 y 50
 w 80
 h 30
@@ -492,14 +504,13 @@ release 0
 x 90
 y 240
 w 70
-h 17
+h 20
 controlPv "$(device):OFFSETX"
 font "arial-medium-r-16.0"
 fgColor index 25
 bgColor index 3
 useDisplayBg
 editable
-autoHeight
 limitsFromDb
 nullColor index 18
 useHexPrefix
@@ -514,7 +525,7 @@ major 4
 minor 1
 release 0
 x 260
-y 210
+y 215
 w 70
 h 17
 controlPv "$(device):KY"
@@ -540,14 +551,13 @@ release 0
 x 260
 y 240
 w 70
-h 17
+h 20
 controlPv "$(device):OFFSETY"
 font "arial-medium-r-16.0"
 fgColor index 25
 bgColor index 3
 useDisplayBg
 editable
-autoHeight
 limitsFromDb
 nullColor index 18
 useHexPrefix
@@ -562,17 +572,17 @@ major 4
 minor 1
 release 0
 x 90
-y 270
+y 265
 w 70
-h 17
+h 20
 controlPv "$(device):BEAMX"
 font "arial-medium-r-16.0"
 fgColor index 16
 bgColor index 10
-autoHeight
 limitsFromDb
 nullColor index 18
 useHexPrefix
+showUnits
 useAlarmBorder
 newPos
 objType "monitors"
@@ -585,17 +595,17 @@ major 4
 minor 1
 release 0
 x 260
-y 270
+y 265
 w 70
-h 17
+h 20
 controlPv "$(device):BEAMY"
 font "arial-medium-r-16.0"
 fgColor index 16
 bgColor index 10
-autoHeight
 limitsFromDb
 nullColor index 18
 useHexPrefix
+showUnits
 useAlarmBorder
 newPos
 objType "monitors"
@@ -609,8 +619,8 @@ minor 1
 release 0
 x 20
 y 30
-w 60
-h 20
+w 56
+h 16
 font "arial-medium-r-14.0"
 fgColor index 6
 bgColor index 3
@@ -627,7 +637,7 @@ major 4
 minor 1
 release 0
 x 20
-y 180
+y 195
 w 51
 h 16
 font "arial-medium-r-14.0"
@@ -635,6 +645,152 @@ fgColor index 6
 bgColor index 3
 value {
   "Position"
+}
+autoSize
+endObjectProperties
+
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 10
+y 305
+w 140
+h 35
+lineColor index 6
+fillColor index 3
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 20
+y 295
+w 55
+h 16
+font "arial-medium-r-14.0"
+fgColor index 6
+bgColor index 3
+value {
+  "Intensity"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 20
+y 315
+w 120
+h 20
+controlPv "$(device):INTENSITY"
+format "exponential"
+font "arial-medium-r-16.0"
+fgColor index 16
+bgColor index 10
+limitsFromDb
+nullColor index 18
+useHexPrefix
+showUnits
+useAlarmBorder
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 175
+y 105
+w 0
+h 55
+lineColor index 14
+fillColor index 3
+arrows "to"
+numPoints 2
+xPoints {
+  0 175
+  1 175
+}
+yPoints {
+  0 160
+  1 105
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 150
+y 130
+w 50
+h 0
+lineColor index 14
+fillColor index 3
+arrows "to"
+numPoints 2
+xPoints {
+  0 200
+  1 150
+}
+yPoints {
+  0 130
+  1 130
+}
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 170
+y 90
+w 10
+h 17
+font "arial-medium-r-16.0"
+fgColor index 14
+bgColor index 3
+useDisplayBg
+value {
+  "Y"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 140
+y 124
+w 10
+h 17
+font "arial-medium-r-16.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 3
+useDisplayBg
+value {
+  "X"
 }
 autoSize
 endObjectProperties

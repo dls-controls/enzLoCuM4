@@ -9,6 +9,13 @@
 # M. Walters 2007-01-22
 # based on original template by Ian Gillingham 9/March/2006
 #
+# Blades need to be arranged in correct locations.
+#
+# Blade A +ve X +ve Y
+# Blade B -ve X +ve Y
+# Blade C -ve X -ve Y
+# Blade D +ve X -ve Y
+#
 # substitutions:
 # device  - device name
 # blade_a_card, blade_a_chan => BLADE A logical card number and ADC channel number
@@ -16,6 +23,80 @@
 # blade_c_card, blade_c_chan => BLADE C logical card number and ADC channel number
 # blade_d_card, blade_d_chan => BLADE D logical card number and ADC channel number
 ################################################################################
+record(transform, "$(device):UPDATE")
+    field(DESC,"Update values based on range")
+    field(INPA,"$(device):CALMR CP")
+    field(CMTB,"Current value for 10V input")
+    field(CLCB,"10^INT((LOG(A)/LOG(2))-9.5)")
+    field(OUTB,"$(device):FANEGUF PP")
+    field(CMTC,"Current value for -10V input")
+    field(CLCC,"-B")
+    field(OUTC,"$(device):FANEGUL PP")
+    field(CMTD,"Upper limit")
+    field(CLCD,"0.9*B")
+    field(OUTD,"$(device):FANHIGH PP")
+    field(CMTE,"Lower limit")
+    field(CLCE,"0.9*C")
+    field(OUTE,"$(device):FANLOW PP")
+    field(CMTF,"Archive deadband")
+    field(CLCF,"0.002*B")
+    field(OUTF,"$(device):FANADEL PP")
+}
+    
+record(dfanout, "$(device):FANEGUF")
+{
+    field(DESC,"Set EGUF of inputs")
+    field(OUTA,"$(device):BLADEA.EGUF")
+    field(OUTB,"$(device):BLADEB.EGUF")
+    field(OUTC,"$(device):BLADEC.EGUF")
+    field(OUTD,"$(device):BLADED.EGUF")
+    field(OUTE,"$(device):BLADEA.HOPR")
+    field(OUTF,"$(device):BLADEB.HOPR")
+    field(OUTG,"$(device):BLADEC.HOPR")
+    field(OUTH,"$(device):BLADED.HOPR")
+}
+
+record(dfanout, "$(device):FANEGUL")
+{
+    field(DESC,"Set EGUL of inputs")
+    field(OUTA,"$(device):BLADEA.EGUL")
+    field(OUTB,"$(device):BLADEB.EGUL")
+    field(OUTC,"$(device):BLADEC.EGUL")
+    field(OUTD,"$(device):BLADED.EGUL")
+    field(OUTE,"$(device):BLADEA.LOPR")
+    field(OUTF,"$(device):BLADEB.LOPR")
+    field(OUTG,"$(device):BLADEC.LOPR")
+    field(OUTH,"$(device):BLADED.LOPR")
+}
+
+
+record(dfanout, "$(device):FANHIGH")
+{
+    field(DESC,"Set HIGH of inputs")
+    field(OUTA,"$(device):BLADEA.HIGH")
+    field(OUTB,"$(device):BLADEB.HIGH")
+    field(OUTC,"$(device):BLADEC.HIGH")
+    field(OUTD,"$(device):BLADED.HIGH")
+}
+
+record(dfanout, "$(device):FANLOW")
+{
+    field(DESC,"Set LOW of inputs")
+    field(OUTA,"$(device):BLADEA.LOW")
+    field(OUTB,"$(device):BLADEB.LOW")
+    field(OUTC,"$(device):BLADEC.LOW")
+    field(OUTD,"$(device):BLADED.LOW")
+}
+
+record(dfanout, "$(device):FANADEL")
+{
+    field(DESC,"Set Achive deadband of inputs")
+    field(OUTA,"$(device):BLADEA.ADEL")
+    field(OUTB,"$(device):BLADEB.ADEL")
+    field(OUTC,"$(device):BLADEC.ADEL")
+    field(OUTD,"$(device):BLADED.ADEL")
+}
+
 
 
 #% archiver 1 Monitor
@@ -25,18 +106,20 @@ record(ai, "$(device):BLADEA")
     field(DTYP, "Hy8401ip")
     field(SCAN, ".1 second")
     field(INP,  "#C$(blade_a_card) S$(blade_a_chan) @MEAN=500")
-    field(EGU,  "V")
+    field(EGU,  "A")
     field(LINR, "LINEAR")
-    field(EGUF, "10")
-    field(EGUL, "-10")
-    field(HOPR, "10")
-    field(LOPR, "-10")
-    field(HIGH, "9")
+    field(EGUF, "1e-10")
+    field(EGUL, "-1e-10")
+    field(HOPR, "1e-10")
+    field(LOPR, "-1e-10")
+    field(HIGH, "0.9e-10")
+    field(LOW, "-0.9e-10")
     field(HSV,  "MINOR")
+    field(LSV,  "MINOR")
     field(ADEL, "0.02")
     field(MDEL, "-1")
     field(PREC, "5")
-	field(FLNK,"$(device):BLADEB")
+    field(FLNK,"$(device):BLADEB")
 }
 
 #% archiver 1 Monitor
@@ -45,18 +128,20 @@ record(ai, "$(device):BLADEB")
     field(DESC, "PBPM Blade B")
     field(DTYP, "Hy8401ip")
     field(INP,  "#C$(blade_b_card) S$(blade_b_chan) @MEAN=500")
-    field(EGU,  "V")
+    field(EGU,  "A")
     field(LINR, "LINEAR")
-    field(EGUF, "10")
-    field(EGUL, "-10")
-    field(HOPR, "10")
-    field(LOPR, "-10")
-    field(HIGH, "9")
+    field(EGUF, "1e-10")
+    field(EGUL, "-1e-10")
+    field(HOPR, "1e-10")
+    field(LOPR, "-1e-10")
+    field(HIGH, "0.9e-10")
+    field(LOW, "-0.9e-10")
     field(HSV,  "MINOR")
+    field(LSV,  "MINOR")
     field(ADEL, "0.02")
     field(MDEL, "-1")
     field(PREC, "5")
-	field(FLNK,"$(device):BLADEC")
+    field(FLNK,"$(device):BLADEC")
 }
 
 #% archiver 1 Monitor
@@ -65,18 +150,20 @@ record(ai, "$(device):BLADEC")
     field(DESC, "PBPM Blade C")
     field(DTYP, "Hy8401ip")
     field(INP,  "#C$(blade_c_card) S$(blade_c_chan) @MEAN=500")
-    field(EGU,  "V")
+    field(EGU,  "A")
     field(LINR, "LINEAR")
-    field(EGUF, "10")
-    field(EGUL, "-10")
-    field(HOPR, "10")
-    field(LOPR, "-10")
-    field(HIGH, "9")
+    field(EGUF, "1e-10")
+    field(EGUL, "-1e-10")
+    field(HOPR, "1e-10")
+    field(LOPR, "-1e-10")
+    field(HIGH, "0.9e-10")
+    field(LOW, "-0.9e-10")
     field(HSV,  "MINOR")
+    field(LSV,  "MINOR")
     field(ADEL, "0.02")
     field(MDEL, "-1")
     field(PREC, "5")
-	field(FLNK,"$(device):BLADED")
+    field(FLNK,"$(device):BLADED")
 }
 
 #% archiver 1 Monitor
@@ -85,79 +172,98 @@ record(ai, "$(device):BLADED")
     field(DESC, "PBPM Blade D")
     field(DTYP, "Hy8401ip")
     field(INP,  "#C$(blade_d_card) S$(blade_d_chan) @MEAN=500")
-    field(EGU,  "V")
+    field(EGU,  "A")
     field(LINR, "LINEAR")
-    field(EGUF, "10")
-    field(EGUL, "-10")
-    field(HOPR, "10")
-    field(LOPR, "-10")
-    field(HIGH, "9")
+    field(EGUF, "1e-10")
+    field(EGUL, "-1e-10")
+    field(HOPR, "1e-10")
+    field(LOPR, "-1e-10")
+    field(HIGH, "0.9e-10")
+    field(LOW, "-0.9e-10")
     field(HSV,  "MINOR")
+    field(LSV,  "MINOR")
     field(ADEL, "0.02")
     field(MDEL, "-1")
     field(PREC, "5")
-	field(FLNK,"$(device):BEAMX")
+    field(FLNK,"$(device):INTENSITY")
 }
 
 record(ai,"$(device):KX")
 {
-  field(DESC,"Beam X pos calc constant")
-  field(DTYP,"Soft Channel")
-  field(INP,"1.0")
-  field(PINI,"YES")
+    field(DESC,"Beam X pos calc constant")
+    field(DTYP,"Soft Channel")
+    field(INP,"1.0")
+    field(PINI,"YES")
     field(PREC, "5")
 }
 
 record(ai,"$(device):KY")
 {
-  field(DESC,"Beam Y pos calc constant")
-  field(DTYP,"Soft Channel")
-  field(INP,"1.0")
-  field(PINI,"YES")
+    field(DESC,"Beam Y pos calc constant")
+    field(DTYP,"Soft Channel")
+    field(INP,"1.0")
+    field(PINI,"YES")
     field(PREC, "5")
 }
 
 record(ai,"$(device):OFFSETX")
 {
-  field(DESC,"Beam X pos calc offset")
-  field(DTYP,"Soft Channel")
-  field(INP,"0.0")
-  field(PINI,"YES")
+    field(DESC,"Beam X pos calc offset")
+    field(DTYP,"Soft Channel")
+    field(INP,"0.0")
+    field(PINI,"YES")
     field(PREC, "5")
+    field(EGU, "$(EGU)")
 }
 
 record(ai,"$(device):OFFSETY")
 {
-  field(DESC,"Beam Y pos calc offset")
-  field(DTYP,"Soft Channel")
-  field(INP,"0.0")
-  field(PINI,"YES")
+    field(DESC,"Beam Y pos calc offset")
+    field(DTYP,"Soft Channel")
+    field(INP,"0.0")
+    field(PINI,"YES")
     field(PREC, "5")
+    field(EGU, "$(EGU)")
 }
+
+record(calc, "$(device):INTENSITY")
+{
+        field(INPA,"$(device):BLADEA NPP")
+        field(INPB,"$(device):BLADEB NPP")
+        field(INPC,"$(device):BLADEC NPP")
+        field(INPD,"$(device):BLADED NPP")
+        field(CALC,"(A+B+C+D)")
+        field(FLNK,"$(device):BEAMX")
+    field(PREC, "5")
+    field(EGU, "A")
+}
+
 
 record(calc, "$(device):BEAMX")
 {
-	field(INPA,"$(device):BLADEA NPP")
-	field(INPB,"$(device):BLADEB NPP")
-	field(INPC,"$(device):BLADEC NPP")
-	field(INPD,"$(device):BLADED NPP")
-	field(INPE,"$(device):KX NPP")
-	field(INPF,"$(device):OFFSETX NPP")
-	field(CALC,"(E*(A+D-B-C)/(A+B+C+D))+F")
-	field(FLNK,"$(device):BEAMY")
+    field(INPA,"$(device):BLADEA NPP")
+    field(INPB,"$(device):BLADEB NPP")
+    field(INPC,"$(device):BLADEC NPP")
+    field(INPD,"$(device):BLADED NPP")
+    field(INPE,"$(device):KX NPP")
+    field(INPF,"$(device):OFFSETX NPP")
+    field(CALC,"(E*(A+D-B-C)/(A+B+C+D))+F")
+    field(FLNK,"$(device):BEAMY")
     field(PREC, "5")
+    field(EGU, "$(EGU)")
 }
 
 record(calc, "$(device):BEAMY")
 {
-	field(INPA,"$(device):BLADEA NPP")
-	field(INPB,"$(device):BLADEB NPP")
-	field(INPC,"$(device):BLADEC NPP")
-	field(INPD,"$(device):BLADED NPP")
-	field(INPE,"$(device):KY NPP")
-	field(INPF,"$(device):OFFSETY NPP")
-	field(CALC,"(E*(A+B-C-D)/(A+B+C+D))+F")
+    field(INPA,"$(device):BLADEA NPP")
+    field(INPB,"$(device):BLADEB NPP")
+    field(INPC,"$(device):BLADEC NPP")
+    field(INPD,"$(device):BLADED NPP")
+    field(INPE,"$(device):KY NPP")
+    field(INPF,"$(device):OFFSETY NPP")
+    field(CALC,"(E*(A+B-C-D)/(A+B+C+D))+F")
     field(PREC, "5")
+    field(EGU, "$(EGU)")
 }
 
 

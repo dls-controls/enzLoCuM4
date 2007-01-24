@@ -12,5 +12,6 @@ DBD += enzLoCuM4Readback.dbd
 # enzLoCuM4Readback.dbd will be created from these files
 enzLoCuM4Readback_DBD += base.dbd
 enzLoCuM4Readback_DBD += Hy8401ip.dbd
+enzLoCuM4Readback_DBD += transformRecord.dbd
 
 include $(TOP)/configure/RULES
