@@ -9,7 +9,7 @@
 # M. Walters 2007-01-22
 # based on original template by Ian Gillingham 9/March/2006
 #
-# Blades need to be arranged in correct locations.
+# Blades/Diode need to be arranged in correct locations.
 #
 # Blade A +ve X +ve Y
 # Blade B -ve X +ve Y
@@ -22,6 +22,8 @@
 # blade_b_card, blade_b_chan => BLADE B logical card number and ADC channel number
 # blade_c_card, blade_c_chan => BLADE C logical card number and ADC channel number
 # blade_d_card, blade_d_chan => BLADE D logical card number and ADC channel number
+# egu => units for positions
+# desc_prefix => Prefix for descriptions. Used by screens. E.g. 'PBPM Blade'
 ################################################################################
 record(transform, "$(device):UPDATE")
     field(DESC,"Update values based on range")
@@ -32,11 +34,13 @@ record(transform, "$(device):UPDATE")
     field(CMTC,"Current value for -10V input")
     field(CLCC,"-B")
     field(OUTC,"$(device):FANEGUL PP")
+# factor of 0.98 comes from default value for maximum on autorange
     field(CMTD,"Upper limit")
-    field(CLCD,"0.9*B")
+    field(CLCD,"0.98*B")
     field(OUTD,"$(device):FANHIGH PP")
+# factor of 0.08 comes from default value for minimum on autorange
     field(CMTE,"Lower limit")
-    field(CLCE,"0.9*C")
+    field(CLCE,"0.08*B")
     field(OUTE,"$(device):FANLOW PP")
     field(CMTF,"Archive deadband")
     field(CLCF,"0.002*B")
@@ -102,7 +106,7 @@ record(dfanout, "$(device):FANADEL")
 #% archiver 1 Monitor
 record(ai, "$(device):BLADEA")
 {
-    field(DESC, "PBPM Blade A")
+    field(DESC, "$(desc_prefix) A")
     field(DTYP, "Hy8401ip")
     field(SCAN, ".1 second")
     field(INP,  "#C$(blade_a_card) S$(blade_a_chan) @MEAN=500")
@@ -125,7 +129,7 @@ record(ai, "$(device):BLADEA")
 #% archiver 1 Monitor
 record(ai, "$(device):BLADEB")
 {
-    field(DESC, "PBPM Blade B")
+    field(DESC, "$(desc_prefix) B")
     field(DTYP, "Hy8401ip")
     field(INP,  "#C$(blade_b_card) S$(blade_b_chan) @MEAN=500")
     field(EGU,  "A")
@@ -147,7 +151,7 @@ record(ai, "$(device):BLADEB")
 #% archiver 1 Monitor
 record(ai, "$(device):BLADEC")
 {
-    field(DESC, "PBPM Blade C")
+    field(DESC, "$(desc_prefix) C")
     field(DTYP, "Hy8401ip")
     field(INP,  "#C$(blade_c_card) S$(blade_c_chan) @MEAN=500")
     field(EGU,  "A")
@@ -169,7 +173,7 @@ record(ai, "$(device):BLADEC")
 #% archiver 1 Monitor
 record(ai, "$(device):BLADED")
 {
-    field(DESC, "PBPM Blade D")
+    field(DESC, "$(desc_prefix) D")
     field(DTYP, "Hy8401ip")
     field(INP,  "#C$(blade_d_card) S$(blade_d_chan) @MEAN=500")
     field(EGU,  "A")
@@ -195,6 +199,7 @@ record(ai,"$(device):KX")
     field(INP,"1.0")
     field(PINI,"YES")
     field(PREC, "5")
+    field(EGU, "$(egu)")
 }
 
 record(ai,"$(device):KY")
@@ -204,6 +209,7 @@ record(ai,"$(device):KY")
     field(INP,"1.0")
     field(PINI,"YES")
     field(PREC, "5")
+    field(EGU, "$(egu)")
 }
 
 record(ai,"$(device):OFFSETX")
@@ -213,7 +219,7 @@ record(ai,"$(device):OFFSETX")
     field(INP,"0.0")
     field(PINI,"YES")
     field(PREC, "5")
-    field(EGU, "$(EGU)")
+    field(EGU, "$(egu)")
 }
 
 record(ai,"$(device):OFFSETY")
@@ -223,7 +229,7 @@ record(ai,"$(device):OFFSETY")
     field(INP,"0.0")
     field(PINI,"YES")
     field(PREC, "5")
-    field(EGU, "$(EGU)")
+    field(EGU, "$(egu)")
 }
 
 record(calc, "$(device):INTENSITY")
@@ -250,7 +256,7 @@ record(calc, "$(device):BEAMX")
     field(CALC,"(E*(A+D-B-C)/(A+B+C+D))+F")
     field(FLNK,"$(device):BEAMY")
     field(PREC, "5")
-    field(EGU, "$(EGU)")
+    field(EGU, "$(egu)")
 }
 
 record(calc, "$(device):BEAMY")
@@ -263,7 +269,7 @@ record(calc, "$(device):BEAMY")
     field(INPF,"$(device):OFFSETY NPP")
     field(CALC,"(E*(A+B-C-D)/(A+B+C+D))+F")
     field(PREC, "5")
-    field(EGU, "$(EGU)")
+    field(EGU, "$(egu)")
 }
 
 

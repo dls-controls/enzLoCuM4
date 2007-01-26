@@ -1,1 +1,1 @@
-edm -x -eolc -m "device=BLTST-DI-PBPM-01" enzLoCuM4Readback.edl
+edm -x -eolc -m "P=BLTST-DI-PBPM-01" enzLoCuM4Readback.edl

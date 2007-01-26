@@ -25,6 +25,8 @@ pattern { device           ,  port   , adr }
 # blade_c_chan - channel for channel C
 # blade_d_card - card for channel D
 # blade_d_chan - channel for channel D
+# egu          - units for position
+# desc_prefix  - prefix for descriptions e.g. 'PBPM Blade' or 'Diode'
 #################################################################
 file enzLoCuM4Readback.template
 {
@@ -33,7 +35,8 @@ pattern {    device,
               blade_b_card, blade_b_chan,
               blade_c_card, blade_c_chan,
               blade_d_card, blade_d_chan,
+              egu, desc_prefix
                   }
-        { BLTST-DI-PBPM-01, 50, 0, 50, 1, 50, 2, 50, 3}
+        { BLTST-DI-PBPM-01, 50, 0, 50, 1, 50, 2, 50, 3, mm, "PBPM Blade"}
 }
 
