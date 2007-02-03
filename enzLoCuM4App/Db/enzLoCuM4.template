@@ -36,6 +36,14 @@ record(mbbi, "$(device):RANGE")
     field(NIST, "Err")
 }
 #
+record(calc, "$(device):RANGEMAX")
+{
+    field(DESC, "Range Maximum")
+    field(CALC, "10^(FLOOR(LOG(A)/LOG(2))-10)")
+    field(EGU, "A")
+    field(INPA, "$(device):CALMR")
+}
+#
 #% controldesk Measuring Range setpoint
 #
 record(mbbo, "$(device):SETRANGE")
@@ -602,6 +610,7 @@ record(calc, "$(device):CALMR")
     field(CALC, "((A-12336)|(A-12336>>4))&255")
     #field(INPA, "$(device):RAWMR PP")
     field(INPA, "$(device):RAWMR")
+    field(FLNK, "$(device):RANGEMAX")
 }
 #
 #% archiver 5 Monitor
