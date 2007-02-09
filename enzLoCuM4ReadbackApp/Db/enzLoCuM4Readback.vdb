@@ -94,7 +94,7 @@ record(dfanout, "$(device):FANLOW")
 
 record(dfanout, "$(device):FANADEL")
 {
-    field(DESC,"Set Achive deadband of inputs")
+    field(DESC,"Set ADEL of inputs")
     field(OUTA,"$(device):BLADEA.ADEL")
     field(OUTB,"$(device):BLADEB.ADEL")
     field(OUTC,"$(device):BLADEC.ADEL")
