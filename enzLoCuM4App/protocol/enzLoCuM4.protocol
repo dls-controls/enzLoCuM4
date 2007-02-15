@@ -136,7 +136,7 @@ limitdl   { #out '$\$1:SYST:COMP?';
             in  '\"ChA %*d,%*d\"';
           }
 setwindow { out '$\$1:SYST:INTL %{4|8|16|32|64}';
-            in  '"New INTL: %*s"';
+            in  '"New INTL: %*d"';
             @init { out '$\$1:SYST:INTL?';
                     in  '\"MVSL: %{04|08|16|32|64}\"';
                   }

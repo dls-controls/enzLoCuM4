@@ -9,7 +9,7 @@ DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *app))
 DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard iocBoot))
 DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard iocboot))
 # Uncomment the next line to build examples
-DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *Example))
+#DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *Example))
 include $(TOP)/configure/RULES_TOP
 
 else
