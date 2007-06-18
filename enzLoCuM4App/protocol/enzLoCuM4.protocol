@@ -70,10 +70,11 @@ auto      { # Scanned by I/O Intr after write from range protocol
 # System-related Commands
 #
 error     { 
-            InTerminator = '\"'LF;
             #Separator = '\"';
             out '$\$1:SYST:ERR?';
-            in  '\"%s';
+	    # Can't use %s here, as it is greedy and would swallow the final
+	    # quote, so use a character set match for "everything but a quote"
+            in  '\"%[^\"]\"';
           }
 version   { out '$\$1:SYST:VERS?';
             in  '\"SCPI_ENZ_%f\"';
