@@ -164,21 +164,9 @@ sta1      { # FP
             InTerminator = '';
             readtimeout  = 50;
             out '$\$1*CLS'; 
-            in  'P3_P4_P0:\?%2r\?\?\?\?';
+            in  'P3_P4_P0:\?%(A)2r%(B)2r%(C)2r';
             out '$\$1:SYST:ERR?';
             in '%*s';
-          }
-sta2      { # MR
-            InTerminator = '';
-            readtimeout  = 50;
-            #out '$\$1*CLS'; 
-            in  'P3_P4_P0:\?\?\?%2r\?\?';
-          }
-sta3      { # AR
-            InTerminator = '';
-            readtimeout  = 50;
-            #out '$\$1*CLS';
-            in  'P3_P4_P0:\?\?\?\?\?%2r';
           }
 
 test     { 

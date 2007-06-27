@@ -572,18 +572,28 @@ record(mbbo, "$(device):SETWINDOW")
 #
 # Front Panel Switches
 #
-record(longin, "$(device):RAWFP")
+record(calcout, "$(device):RAW")
 #record(stringin, "$(device):RAWFP")
 {
     field(DTYP, "stream")
-    field(INP,  "@enzLoCuM4.protocol sta1($(adr)) $(port) 0")
+    field(OUT,  "@enzLoCuM4.protocol sta1($(adr)) $(port) 0")
     field(SCAN, "2 second")
+    field(FLNK, "$(device):FAN")
+    field(CALC, "A")
 }
+
+record(fanout, "$(device):FAN")
+{
+    field(LNK1, "$(device):CALFP")
+    field(LNK2, "$(device):CALMR")
+    field(LNK3, "$(device):CALAR")
+}
+
 record(calc, "$(device):CALFP")
 {
     field(CALC, "((A-12336)|(A-12336>>4))&255")
-    #field(INPA, "$(device):RAWFP PP")
-    field(INPA, "$(device):RAWFP")
+    field(INPA, "$(device):RAW.A")
+    field(FLNK, "$(device):FP")
 }
 #
 #% archiver 5 Monitor
@@ -593,24 +603,15 @@ record(mbbiDirect, "$(device):FP")
 {
     field(DESC, "Front Panel Switches")
     field(INP,  "$(device):CALFP PP")
-    field(SCAN, "5 second")
 }
 #
 # Measuring Range
 #
-record(longin, "$(device):RAWMR")
-#record(stringin, "$(device):RAWMR")
-{
-    field(DTYP, "stream")
-    field(INP,  "@enzLoCuM4.protocol sta2($(adr)) $(port) 0")
-    field(SCAN, "I/O Intr")
-}
 record(calc, "$(device):CALMR")
 {
     field(CALC, "((A-12336)|(A-12336>>4))&255")
-    #field(INPA, "$(device):RAWMR PP")
-    field(INPA, "$(device):RAWMR")
-    field(FLNK, "$(device):RANGEMAX")
+    field(INPA, "$(device):RAW.B")
+    field(FLNK, "$(device):MR")
 }
 #
 #% archiver 5 Monitor
@@ -620,23 +621,16 @@ record(mbbiDirect, "$(device):MR")
 {
     field(DESC, "Measuring Range")
     field(INP,  "$(device):CALMR PP")
-    field(SCAN, "5 second")
+    field(FLNK, "$(device):RANGEMAX")
 }
 #
 # Automatic Ranging
 #
-record(longin, "$(device):RAWAR")
-#record(stringin, "$(device):RAWAR")
-{
-    field(DTYP, "stream")
-    field(INP,  "@enzLoCuM4.protocol sta3($(adr)) $(port) 0")
-    field(SCAN, "I/O Intr")
-}
 record(calc, "$(device):CALAR")
 {
     field(CALC, "((A-12336)|(A-12336>>4))&255")
-    #field(INPA, "$(device):RAWAR PP")
-    field(INPA, "$(device):RAWAR")
+    field(INPA, "$(device):RAW.C")
+    field(FLNK, "$(device):AR")
 }
 #
 #% archiver 5 Monitor
@@ -646,7 +640,6 @@ record(mbbiDirect, "$(device):AR")
 {
     field(DESC, "Automatic Ranging")
     field(INP,  "$(device):CALAR PP")
-    field(SCAN, "5 second")
 }
 ################################################################################
 # Version
