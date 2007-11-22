@@ -186,7 +186,9 @@ serial    {
             # Remove leading CR LF - these are apparent but not documented
             in '\r';
             # NB: Documentation does not mention an 'n' after LoCuM4 but is observed
-            in  '\"LoCuM4n,Version \?.\?\?,Address \?\?,\#%d\"\r';
+            # For LoCuM4 installed in I15, OH1, downstream, the LoCuM4 suffix is a "p",
+            #    possibly refering to a positive or negative bias?
+            in  '\"LoCuM4\?,Version \?.\?\?,Address \?\?,\#%d\"\r';
           }
 idn       { out '$\$1*IDN?';
             # Remove leading CR LF - these are apparent but not documented
