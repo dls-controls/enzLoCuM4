@@ -298,6 +298,7 @@ record(calc, "$(device):BLADEAuA") {
   field(CALC, "A*1000000")
   field(INPA, "$(device):BLADEA PP")
   field(EGU, "uA")
+  field(PREC, "5")
 }
 
 record(calc, "$(device):BLADEBuA") {
@@ -306,6 +307,7 @@ record(calc, "$(device):BLADEBuA") {
   field(CALC, "A*1000000")
   field(INPA, "$(device):BLADEB PP")
   field(EGU, "uA")
+  field(PREC, "5")
 }
 
 record(calc, "$(device):BLADECuA") {
@@ -314,6 +316,7 @@ record(calc, "$(device):BLADECuA") {
   field(CALC, "A*1000000")
   field(INPA, "$(device):BLADEC PP")
   field(EGU, "uA")
+  field(PREC, "5")
 }
 
 record(calc, "$(device):BLADEDuA") {
@@ -322,6 +325,7 @@ record(calc, "$(device):BLADEDuA") {
   field(CALC, "A*1000000")
   field(INPA, "$(device):BLADED PP")
   field(EGU, "uA")
+  field(PREC, "5")
 }
 
 #! Further lines contain data used by VisualDCT
