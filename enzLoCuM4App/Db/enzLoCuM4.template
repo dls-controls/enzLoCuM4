@@ -13,6 +13,10 @@
 # port    - serial port on IOC (steam device code ie /ty/0/1 => ty_0_1)
 # adr     - address
 ################################################################################
+
+
+#% gdatag,template,enzLoCuM4,$(gda_name),$(gda_desc)
+
 # Measuring Range
 #
 #% archiver 2 Monitor
@@ -46,6 +50,7 @@ record(calc, "$(device):RANGEMAX")
 #
 #% controldesk Measuring Range setpoint
 #
+#% gdatag,mbbinary,rw,$(gda_name),RANGE, Range Selection
 record(mbbo, "$(device):SETRANGE")
 {
     field(DESC, "Measuring Range")
