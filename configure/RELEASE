@@ -13,7 +13,7 @@ SUPPORT=/dls_sw/prod/R3.14.8.2/support
 WORK=/dls_sw/work/R3.14.8.2/support
 
 # support modules:
-STREAM=$(SUPPORT)/streamDevice/2-3dls3
+STREAM=$(SUPPORT)/streamDevice/2-3dls4
 # Needed for analogue readbacks.
 HY8401=$(SUPPORT)/Hy8401ip/3-4
 CALC=$(SUPPORT)/calc/2-6-3dls1
