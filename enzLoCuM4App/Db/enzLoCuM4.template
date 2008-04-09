@@ -17,6 +17,31 @@
 
 #% gdatag,template,enzLoCuM4,$(gda_name),$(gda_desc)
 
+# Configuration
+# Includes range, bias, hv, ext and auto settings
+record(calcout, "$(device):CONF")
+{
+    field(DESC, "Get Configuration")
+    field(DTYP, "stream")
+    field(CALC, "0")
+    field(OUT, "@enzLoCuM4.protocol conf($(adr)) $(port) 0")
+    field(SCAN, "2 second")
+    field(FLNK, "$(device):FANCONF")
+}
+
+# Forward values from the previous record to their correct records
+record(fanout, "$(device):FANCONF")
+{
+    field(DESC, "Distribute configuration")
+    field(LNK1, "$(device):RANGE")
+    field(LNK2, "$(device):BIASV")
+    field(LNK3, "$(device):HV")
+    field(LNK4, "$(device):EXT")
+    field(LNK5, "$(device):BIAS")
+    field(LNK6, "$(device):AUTO")
+}
+
+
 # Measuring Range
 #
 #% archiver 2 Monitor
@@ -25,9 +50,9 @@
 record(mbbi, "$(device):RANGE")
 {
     field(DESC, "Measuring Range")
-    field(DTYP, "stream")
-    field(INP,  "@enzLoCuM4.protocol range($(adr)) $(port) 0")
-    field(SCAN, "2 second")
+    field(DTYP, "Soft Channel")
+    field(INP, "$(device):CONF.A")
+    field(SCAN, "Passive")
     field(ZRST, "100pA")
     field(ONST, "1nA")
     field(TWST, "10nA")
@@ -75,10 +100,9 @@ record(mbbo, "$(device):SETRANGE")
 record(mbbi, "$(device):BIASV")
 {
     field(DESC, "Bias Voltage Source")
-    field(DTYP, "stream")
-    field(INP,  "@enzLoCuM4.protocol biasv($(adr)) $(port) 0")
-    #field(SCAN, "2 second")
-    field(SCAN, "I/O Intr")
+    field(DTYP, "Soft Channel")
+    field(INP,  "$(device):CONF.B")
+    field(SCAN, "Passive")
     field(ZRST, "Plus")
     field(ONST, "Minus")
     field(TWST, "External")
@@ -107,9 +131,9 @@ record(mbbo, "$(device):SETBIASV")
 record(bi, "$(device):HV")
 {
     field(DESC, "HV")
-    field(DTYP, "stream")
-    field(INP,  "@enzLoCuM4.protocol hv($(adr)) $(port) 0")
-    field(SCAN, "I/O Intr")
+    field(DTYP, "Soft Channel")
+    field(INP,  "$(device):CONF.C")
+    field(SCAN, "Passive")
     field(ZNAM, "Off")
     field(ONAM, "On")
 }
@@ -122,9 +146,9 @@ record(bi, "$(device):HV")
 record(bi, "$(device):EXT")
 {
     field(DESC, "Ext")
-    field(DTYP, "stream")
-    field(INP,  "@enzLoCuM4.protocol ext($(adr)) $(port) 0")
-    field(SCAN, "I/O Intr")
+    field(DTYP, "Soft Channel")
+    field(INP,  "$(device):CONF.D")
+    field(SCAN, "Passive")
     field(ZNAM, "Off")
     field(ONAM, "On")
 }
@@ -137,9 +161,9 @@ record(bi, "$(device):EXT")
 record(bi, "$(device):BIAS")
 {
     field(DESC, "Bias")
-    field(DTYP, "stream")
-    field(INP,  "@enzLoCuM4.protocol bias($(adr)) $(port) 0")
-    field(SCAN, "I/O Intr")
+    field(DTYP, "Soft Channel")
+    field(INP,  "$(device):CONF.E")
+    field(SCAN, "Passive")
     field(ZNAM, "Off")
     field(ONAM, "On")
 }
@@ -152,9 +176,9 @@ record(bi, "$(device):BIAS")
 record(bi, "$(device):AUTO")
 {
     field(DESC, "Auto")
-    field(DTYP, "stream")
-    field(INP,  "@enzLoCuM4.protocol auto($(adr)) $(port) 0")
-    field(SCAN, "I/O Intr")
+    field(DTYP, "Soft Channel")
+    field(INP,  "$(device):CONF.F")
+    field(SCAN, "Passive")
     field(ZNAM, "Off")
     field(ONAM, "On")
 }
