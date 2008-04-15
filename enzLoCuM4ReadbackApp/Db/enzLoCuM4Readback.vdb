@@ -28,7 +28,7 @@
 ################################################################################
 
 
-#% gdatag,template,enzLoCuM4Readback,$(gda_name),$(gda_desc)
+#% gdatag,template,bpm,$(gda_name),$(gda_desc)
 
 record(transform, "$(device):UPDATE") {
   field(DESC, "Update values based on range")
@@ -100,7 +100,7 @@ record(dfanout, "$(device):FANADEL") {
   field(OUTD, "$(device):BLADED.ADEL")
 }
 
-#% gdatag,pv,ro,$(gda_name),BLADEA,Channel A Current
+#% gdatag,pv,ro,$(gda_curr_name),I1,Channel 1 Current
 #% archiver 1 Monitor
 record(ai, "$(device):BLADEA") {
   field(DESC, "$(desc_prefix) A")
@@ -123,7 +123,7 @@ record(ai, "$(device):BLADEA") {
   field(FLNK, "$(device):BLADEB")
 }
 
-#% gdatag,pv,ro,$(gda_name),BLADEB,Channel B Current
+#% gdatag,pv,ro,$(gda_curr_name),I2,Channel 2 Current
 #% archiver 1 Monitor
 record(ai, "$(device):BLADEB") {
   field(DESC, "$(desc_prefix) B")
@@ -145,7 +145,7 @@ record(ai, "$(device):BLADEB") {
   field(FLNK, "$(device):BLADEC")
 }
 
-#% gdatag,pv,ro,$(gda_name),BLADEC,Channel C Current
+#% gdatag,pv,ro,$(gda_curr_name),I3,Channel 3 Current
 #% archiver 1 Monitor
 record(ai, "$(device):BLADEC") {
   field(DESC, "$(desc_prefix) C")
@@ -167,7 +167,7 @@ record(ai, "$(device):BLADEC") {
   field(FLNK, "$(device):BLADED")
 }
 
-#% gdatag,pv,ro,$(gda_name),BLADED,Channel D Current
+#% gdatag,pv,ro,$(gda_curr_name),I4,Channel 4 Current
 #% archiver 1 Monitor
 record(ai, "$(device):BLADED") {
   field(DESC, "$(desc_prefix) D")
@@ -225,7 +225,7 @@ record(ai, "$(device):OFFSETY") {
   field(EGU, "$(egu)")
 }
 
-#% gdatag,pv,ro,$(gda_name),INTENSITY,Sum of currents A+B+C+D
+#% gdatag,pv,ro,$(gda_name),INTENSITY,Summed intensity value
 record(calc, "$(device):INTENSITY") {
   field(INPA, "$(device):BLADEA NPP")
   field(INPB, "$(device):BLADEB NPP")
@@ -237,7 +237,7 @@ record(calc, "$(device):INTENSITY") {
   field(EGU, "A")
 }
 
-#% gdatag,pv,ro,$(gda_name),BEAMX,Beam Position X
+#% gdatag,pv,ro,$(gda_name),XPOS,X Position
 record(calc, "$(device):BEAMX") {
   field(INPA, "$(device):BLADEA NPP")
   field(INPB, "$(device):BLADEB NPP")
@@ -251,7 +251,7 @@ record(calc, "$(device):BEAMX") {
   field(EGU, "$(egu)")
 }
 
-#% gdatag,pv,ro,$(gda_name),BEAMY,Beam Position Y
+#% gdatag,pv,ro,$(gda_name),YPOS,Y Position
 record(calc, "$(device):BEAMY") {
   field(INPA, "$(device):BLADEA NPP")
   field(INPB, "$(device):BLADEB NPP")
