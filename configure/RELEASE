@@ -15,7 +15,7 @@ WORK=/dls_sw/work/R3.14.8.2/support
 # support modules:
 #STREAM=$(SUPPORT)/streamDevice/2-3dls4
 # Needed for analogue readbacks.
-HY8401=$(SUPPORT)/Hy8401ip/3-11
+HY8401=$(SUPPORT)/Hy8401ip/3-13
 CALC=$(SUPPORT)/calc/2-6-3dls1
 # Uncomment the next lines for testing
 #ASYN=$(SUPPORT)/asyn/4-9
