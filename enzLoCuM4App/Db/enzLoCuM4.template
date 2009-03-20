@@ -773,13 +773,13 @@ record(longin, "$(device):CHD:PEAK")
 # Strings for vendor and model number
 
 #% gdatag,pv,ro,$(gda_name),VENDOR,Vendor String
-record(stringout, "$(P):VENDOR") {
+record(stringout, "$(device):VENDOR") {
   field(VAL, "ENZ")
   field(PINI, "YES")
 }
 
 #% gdatag,pv,ro,$(gda_name),MODEL,Model String
-record(stringout, "$(P):MODEL") {
+record(stringout, "$(device):MODEL") {
   field(VAL, "LoCuM4")
   field(PINI, "YES")  
 }
