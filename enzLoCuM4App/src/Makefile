@@ -12,6 +12,9 @@ DBD += enzLoCuM4.dbd
                                                                                 
 enzLoCuM4_DBD += base.dbd
 
+DATA += enzLoCuM4_sim.py
+
+
 include $(TOP)/configure/RULES
                                                                                 
 else
