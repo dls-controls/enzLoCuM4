@@ -28,9 +28,9 @@ class enzLoCuM4TestSuite(TestSuite):
 
         # The tests
         CaseSetRange(self)
-        #CaseSetSignal(self)
-        #CaseSetLo(self)
-        #CaseSetHi(self)
+        CaseSetSignal(self)
+        CaseSetLo(self)
+        CaseSetHi(self)
         CaseSetBiasSource(self)
         
 ################################################
@@ -67,11 +67,20 @@ class CaseSetRange(enzLoCuM4Case):
 class CaseSetSignal(enzLoCuM4Case):
     def runTest(self):
         print "enzLoCuM4TestSuite - CaseSetSignal()"
-        '''The Ident test'''
+        # Signals including boundary conditions
+        vals = [0, 100, 500, 5000, 10000]
+        chans = ["CHA","CHB","CHC","CHD"]
         if self.simulationDevicePresent("locum4"):
-            self.simulation('locum4').setChanSignal('CHA', 500)
-            self.sleep(1)
-            self.verifyPv(self.base_pvname+":CHA:PEAK", 500)
+            for ch in chans:
+                for v in vals:
+                    self.diagnostic("CaseSetSignal: setpoint -> %d" % (v),1)
+                    self.simulation('locum4').setChanSignal(ch, v)
+                    self.sleep(5)
+                    self.diagnostic("CaseSetSignal: read -> %d" % (self.getPv(self.base_pvname+":"+ch+":PEAK")),1)
+                    self.verifyPv(self.base_pvname+":"+ch+":PEAK", v)
+            for ch in chans:
+                self.simulation('locum4').setChanSignal(ch, 0)
+
             
 class CaseSetLo(enzLoCuM4Case):
     def runTest(self):
