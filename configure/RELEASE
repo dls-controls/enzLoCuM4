@@ -13,15 +13,15 @@ SUPPORT=/dls_sw/prod/R3.14.8.2/support
 WORK=/dls_sw/work/R3.14.8.2/support
 
 # support modules:
-#STREAM=$(SUPPORT)/streamDevice/2-3dls4
+STREAMS=        $(SUPPORT)/streamDevice/2-4dls2-1
 # Needed for analogue readbacks.
-HY8401=$(SUPPORT)/Hy8401ip/3-14
-CALC=$(SUPPORT)/calc/2-6-7dls1
+HY8401=         $(SUPPORT)/Hy8401ip/3-14
+CALC=           $(SUPPORT)/calc/2-6-7dls1
 # Uncomment the next lines for testing
 #ASYN=$(SUPPORT)/asyn/4-9
 #IPAC=$(SUPPORT)/ipac/2-8dls4-3
 #HY8515=$(SUPPORT)/Hy8515/3-4
-LOCUM4=$(TOP)
+LOCUM4=         $(TOP)
 
 
 # EPICS_BASE usually appears last so other apps can override stuff:
