@@ -18,6 +18,7 @@ class enzLoCuM4TestSuite(TestSuite):
         Target("simulation", self,
             iocDirectory="iocs/simulation",
             iocBootCmd="bin/linux-x86/stsimulation.boot",
+            runIocInScreenUnderHudson=True,
             epicsDbFiles="db/simulation.db",
             ##simDevices=[SimDevice("locum4", 9016)],
             simDevices=[SimDevice("locum4", 9001, rpc=True)],
