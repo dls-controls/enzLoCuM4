@@ -1,0 +1,5 @@
+<?xml version="1.0" ?>
+<testsuite failures="0" tests="1" time="260.549175024" timestamp="1251823681.99">
+  <testcase classname="__main__" name="CaseIdent"/>
+  <testcase classname="__main__" name="CaseSetRange"/>
+</testsuite>
