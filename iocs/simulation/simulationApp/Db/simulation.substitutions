@@ -1,0 +1,17 @@
+#################################################################
+# enzLoCuM4.substitutions
+# Initialise templates for an ENZ LoCuM-4 Low Current monitor
+#
+# substitutions:
+# device  - device name
+# port    - serial port (steam device code ie /ty/0/1 => ty_0_1)
+# adr     - address (01 - 99)
+#################################################################
+# PBPM current monitor
+#
+file enzLoCuM4.template
+{
+pattern {    device   ,  port     , adr }
+        {    LOCUM4SIM-01, "asynenzLoCuM4" , 01  }
+}
+
