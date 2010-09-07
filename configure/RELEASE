@@ -10,13 +10,13 @@
 
 TEMPLATE_TOP=$(EPICS_BASE)/templates/makeBaseApp/top
 SUPPORT=/dls_sw/prod/R3.14.11/support
-WORK=/dls_sw/work/R3.14.11/support
+#WORK=/dls_sw/work/R3.14.11/support
 
 # support modules:
-STREAMS=        $(SUPPORT)/streamDevice/2-4dls4
+STREAMS=        $(SUPPORT)/streamDevice/2-4dls5
 # Needed for analogue readbacks.
 HY8401=         $(SUPPORT)/Hy8401ip/3-16
-CALC=           $(SUPPORT)/calc/2-8dls1
+CALC=           $(SUPPORT)/calc/2-8dls2
 # Uncomment the next lines for testing
 #ASYN=$(SUPPORT)/asyn/4-9
 #IPAC=$(SUPPORT)/ipac/2-8dls4-3
