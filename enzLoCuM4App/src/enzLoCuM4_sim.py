@@ -366,6 +366,7 @@ if __name__ == "__main__":
 	myEnz = enzLoCuM4([01,])
 	myEnz.start_ip(9004)
 	myEnz.start_debug(9006)
+    CreateSimulation(enzLoCuM4) 
 	raw_input()
 
 

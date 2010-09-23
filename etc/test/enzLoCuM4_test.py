@@ -1,4 +1,4 @@
-#!/dls_sw/tools/bin/python2.4
+#!/bin/env dls-python2.4
 
 # Test suite to use with pyUnit
 
@@ -24,7 +24,8 @@ class enzLoCuM4TestSuite(TestSuite):
             simDevices=[SimDevice("locum4", 9001, rpc=True)],
             environment=[('EPICS_CA_REPEATER_PORT','6065'),
                 ('EPICS_CA_SERVER_PORT','6064')],
-            guiCmds=[r'edm -x -eolc -m "P=LOCUM4SIM-01" data/enzLoCuM4.edl'])
+            guiCmds=[r'edm -x -eolc -m "P=LOCUM4SIM-01" data/enzLoCuM4.edl'],
+            simulationCmds=['data/enzLoCuM4_sim.py -i 8100 -r 9001'])
 
         # The tests
         CaseSetRange(self)

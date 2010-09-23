@@ -1,20 +1,20 @@
 TOP = ../..
 include $(TOP)/configure/CONFIG
 
+# this is the dls-xml-iocbuilder.py file
+XMLBUILDER := dls-xml-iocbuilder.py
+
 # set to -d to get debugging
 DEBUG :=
 
-# These are the xml files, out of which we will make iocs
-XMLS := $(wildcard *.xml)
-
-# These are the IOCS
-IOCS := $(patsubst %.xml, %, $(XMLS))
+# Create an IOC from all .xml files and all .py files
+IOCS := $(patsubst %.xml, %, $(wildcard *.xml)) $(patsubst %.py, %, $(wildcard *.py))
 
 # These are the IOCS we don't want to make simulations out of
 NO_SIMS :=
 
 # Make simulations from all IOCS not in NO_SIMS
-SIMS := $(filter-out $(NO_SIMS), $(patsubst %, %_sim, $(IOCS)))
+SIMS := $(patsubst %, %_sim, $(filter-out $(NO_SIMS), $(IOCS)))
 
 # These are the IOC dirs to make
 IOC_DIRS := $(patsubst %, $(TOP)/iocs/%, $(IOCS) $(SIMS))
@@ -22,13 +22,21 @@ IOC_DIRS := $(patsubst %, $(TOP)/iocs/%, $(IOCS) $(SIMS))
 # Add the created iocs and sims to the install target
 install: $(IOC_DIRS)
 
-# General rule for a Standard IOC
+# General rule for building a Standard IOC from an XML file
 $(TOP)/iocs/%: %.xml
-	/dls_sw/work/common/python/xmlbuilder/src/xmlbuilder.py $(DEBUG) $<
+	$(XMLBUILDER) $(DEBUG) $<
 
-# General rule for a simulation IOC
+# General rule for building a Simulation IOC from an XML file
 $(TOP)/iocs/%_sim: %.xml
-	/dls_sw/work/common/python/xmlbuilder/src/xmlbuilder.py $(DEBUG) --sim=linux-x86 $<
+	$(XMLBUILDER) $(DEBUG) --sim=linux-x86 $<
+
+# Alternate rule for building a Standard IOC from a python file
+$(TOP)/iocs/%: %.py
+	./$< $(DEBUG) $*
+
+# Alternate rule for building a Simulation IOC from a python file
+$(TOP)/iocs/%_sim: %.py
+	./$< $(DEBUG) --sim=linux-x86 $*
 
 # Remove the generated iocs on clean
 clean:

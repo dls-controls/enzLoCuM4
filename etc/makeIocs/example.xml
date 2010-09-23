@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <components arch="linux-x86">
-	<enzLoCuM4.enzLoCuM4 device="device" adr="adr" port="port" gda="False"/>
-	<enzLoCuM4.simulation_enzLoCuM4 device="device" adr="adr" port="port"/>
-	<enzLoCuM4.enzLoCuM4Readback device="device" gda_curr_name="gda_curr_name" desc_prefix="desc_prefix" blade_a_card="blade_a_card" blade_a_chan="blade_a_chan" blade_b_card="blade_b_card" blade_b_chan="blade_b_chan" blade_c_card="blade_c_card" blade_c_chan="blade_c_chan" blade_d_card="blade_d_card" blade_d_chan="blade_d_chan" egu="egu" gda="False"/>
+	<enzLoCuM4.enzLoCuM4 adr="adr" device="device" gda="False" port="port"/>
+	<enzLoCuM4.simulation_enzLoCuM4 adr="adr" device="device" port="port"/>
+	<enzLoCuM4.enzLoCuM4Readback blade_a_card="blade_a_card" blade_a_chan="blade_a_chan" blade_b_card="blade_b_card" blade_b_chan="blade_b_chan" blade_c_card="blade_c_card" blade_c_chan="blade_c_chan" blade_d_card="blade_d_card" blade_d_chan="blade_d_chan" desc_prefix="desc_prefix" device="device" egu="egu" gda="False" gda_curr_name="gda_curr_name"/>
 </components>

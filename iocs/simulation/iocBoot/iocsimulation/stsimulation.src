@@ -33,11 +33,11 @@ epicsEnvSet "STREAM_PROTOCOL_PATH", "$(LOCUM4)/data"
 
 # Setup pythonpaths for simulations
 epicsEnvSet("PYTHONPATH", "$(STREAM_PROTOCOL_PATH)")
-Python("from enzLoCuM4_sim import enzLoCuM4")
-Python("locum4sim = enzLoCuM4([01,])")
-Python("locum4sim.start_ip(8001)")
+#Python("from enzLoCuM4_sim import enzLoCuM4")
+#Python("locum4sim = enzLoCuM4([01,])")
+#Python("locum4sim.start_ip(8001)")
 ## Python("locum4sim.start_debug(9016)")
-Python("locum4sim.start_rpc(9001)")
+#Python("locum4sim.start_rpc(9001)")
 
 drvAsynIPPortConfigure("asynenzLoCuM4", "localhost:8001", 100, 0, 0)
 

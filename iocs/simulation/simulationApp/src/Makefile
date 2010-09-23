@@ -13,7 +13,7 @@ DBD += simulation.dbd
 
 # simulation.dbd will be created from these files
 simulation_DBD += base.dbd
-simulation_DBD += pyDrv.dbd
+#simulation_DBD += pyDrv.dbd
 simulation_DBD += stdSupport.dbd
 simulation_DBD += asyn.dbd
 simulation_DBD += drvAsynIPPort.dbd
@@ -42,7 +42,7 @@ simulation_LIBS += std
 simulation_LIBS += stream
 simulation_LIBS += asyn
 simulation_LIBS += pcre
-simulation_LIBS += pyDrv
+#simulation_LIBS += pyDrv
 
 # We need to link this IOC Application against the EPICS Base libraries
 simulation_LIBS += $(EPICS_BASE_IOC_LIBS)

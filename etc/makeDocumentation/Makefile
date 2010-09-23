@@ -4,19 +4,27 @@ include $(TOP)/configure/CONFIG
 # set to -d to get debugging
 DEBUG :=
 
+# this is the doxygen output dir
+DOCDIR := $(TOP)/documentation/doxygen
+
 # add the documentation files to the install target
-install: $(TOP)/documentation/build_instructions $(TOP)/documentation/index.html
+install: $(DOCDIR)
 
-# rule for documentation
-$(TOP)/documentation/index.html: config.src manual.src $(TOP)/documentation/build_instructions
-	mkdir -p $(TOP)/documentation
-	/dls_sw/work/common/python/documentation/src/documentation.py -o $(TOP)/documentation config.src manual.src
+# rule for creating the doxygen documentation
+$(DOCDIR): config.src manual.src $(DOCDIR)/build_instructions_example
+	mkdir -p $(DOCDIR)
+	dls-make-doxygen-documentation.py -o $(DOCDIR) config.src manual.src
 
-# rule for generating build instructions from example.xml file
-$(TOP)/documentation/build_instructions: $(TOP)/etc/makeIocs/example.xml
-	mkdir -p $(TOP)/documentation
-	/dls_sw/work/common/python/xmlbuilder/src/xmlbuilder.py --doc=$@ $(DEBUG) $^
+# rule for generating build instructions from an xml file
+$(DOCDIR)/build_instructions_%: $(TOP)/etc/makeIocs/%.xml
+	mkdir -p $(DOCDIR)
+	dls-xml-iocbuilder.py --doc=$@ $(DEBUG) $^
 
-# Remove entire documentation dir on clean
+# rule for generating build instructions from a py file
+$(DOCDIR)/build_instructions_%: $(TOP)/etc/makeIocs/%.py
+	mkdir -p $(DOCDIR)
+	$^ --doc=$@ $(DEBUG) example
+
+# Remove entire documentation/doxygen dir on clean
 clean:
-	rm -rf $(TOP)/documentation
+	rm -rf $(DOCDIR)
