@@ -9,9 +9,11 @@
 # $Revision$
 #
 # substitutions:
-# device  - device name
-# port    - serial port on IOC (steam device code ie /ty/0/1 => ty_0_1)
-# adr     - address
+# % macro, device, Device name
+# % macro, port, Serial port on IOC (e.g. ty_40_1)
+# % macro, adr, Address (e.g. 01)
+# % macro, gda_name, GDA name
+# % macro, gda_desc, GDA description
 ################################################################################
 
 
