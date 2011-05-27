@@ -14,10 +14,12 @@
 # % macro, adr, Address (e.g. 01)
 # % macro, gda_name, GDA name
 # % macro, gda_desc, GDA description
+# % macro, name, Object and gui association name
 ################################################################################
 
 
 #% gdatag,template,currAmpQuad,$(gda_name),$(gda_desc)
+# % gui, $(name), edm, enzLoCuM4.edl, P=$(device)
 
 # Configuration
 # Includes range, bias, hv, ext and auto settings
@@ -187,6 +189,7 @@ record(bi, "$(device):AUTO")
 ################################################################################
 # Error Status
 #
+# % gui, $(name), sevr
 record(stringin, "$(device):ERR")
 {
     field(DESC, "Error Status")
