@@ -657,6 +657,28 @@ record(mbbiDirect, "$(device):MR")
     field(INP,  "$(device):CALMR PP")
     field(FLNK, "$(device):RANGEMAX")
 }
+#% gdatag,mbbinary,ro,$(gda_name),RANGE_READBACK,Range Readback
+record(mbbi, "$(device):MRREADBACK") {
+	field(DESC, "Measuring Range Readback")
+	field(DTYP, "Raw Soft Channel")
+	field(INP, "$(device):MR CP")
+  	field(ZRVL, "1")
+	field(ONVL, "2")
+  	field(TWVL, "4")
+  	field(THVL, "8")
+  	field(FRVL, "16")
+  	field(FVVL, "32")
+  	field(SXVL, "64")
+  	field(SVVL, "128")
+  	field(ZRST, "100pA")
+  	field(ONST, "1nA")
+  	field(TWST, "10nA")
+  	field(THST, "100nA")
+  	field(FRST, "1uA")
+  	field(FVST, "10uA")
+  	field(SXST, "100uA")
+  	field(SVST, "1mA")
+}
 #
 # Automatic Ranging
 #
