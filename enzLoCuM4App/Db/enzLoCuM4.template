@@ -18,8 +18,8 @@
 ################################################################################
 
 
-#% gdatag,template,currAmpQuad,$(gda_name),$(gda_desc)
-# % gui, $(name), edm, enzLoCuM4.edl, P=$(device)
+#% gdatag,template,currAmpQuad,$(gda_name=),$(gda_desc=)
+# % gui, $(name=), edm, enzLoCuM4.edl, P=$(device)
 
 # Configuration
 # Includes range, bias, hv, ext and auto settings
@@ -79,7 +79,7 @@ record(calc, "$(device):RANGEMAX")
 #
 #% controldesk Measuring Range setpoint
 #
-#% gdatag,mbbinary,rw,$(gda_name),RANGE,Range Selection
+#% gdatag,mbbinary,rw,$(gda_name=),RANGE,Range Selection
 record(mbbo, "$(device):SETRANGE")
 {
     field(DESC, "Measuring Range")
@@ -189,7 +189,7 @@ record(bi, "$(device):AUTO")
 ################################################################################
 # Error Status
 #
-# % gui, $(name), sevr
+# % gui, $(name=), sevr
 record(stringin, "$(device):ERR")
 {
     field(DESC, "Error Status")
@@ -657,7 +657,7 @@ record(mbbiDirect, "$(device):MR")
     field(INP,  "$(device):CALMR PP")
     field(FLNK, "$(device):RANGEMAX")
 }
-#% gdatag,mbbinary,ro,$(gda_name),RANGE_READBACK,Range Readback
+#% gdatag,mbbinary,ro,$(gda_name=),RANGE_READBACK,Range Readback
 record(mbbi, "$(device):MRREADBACK") {
 	field(DESC, "Measuring Range Readback")
 	field(DTYP, "Raw Soft Channel")
@@ -799,13 +799,13 @@ record(longin, "$(device):CHD:PEAK")
 ################################################################################
 # Strings for vendor and model number
 
-#% gdatag,pv,ro,$(gda_name),VENDOR,Vendor String
+#% gdatag,pv,ro,$(gda_name=),VENDOR,Vendor String
 record(stringout, "$(device):VENDOR") {
   field(VAL, "ENZ")
   field(PINI, "YES")
 }
 
-#% gdatag,pv,ro,$(gda_name),MODEL,Model String
+#% gdatag,pv,ro,$(gda_name=),MODEL,Model String
 record(stringout, "$(device):MODEL") {
   field(VAL, "LoCuM4")
   field(PINI, "YES")  

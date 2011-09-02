@@ -28,7 +28,7 @@
 ################################################################################
 
 
-#% gdatag,template,bpm,$(gda_name),$(gda_desc)
+#% gdatag,template,bpm,$(gda_name=),$(gda_desc=)
 
 record(transform, "$(device):UPDATE") {
   field(DESC, "Update values based on range")
@@ -225,7 +225,7 @@ record(ai, "$(device):OFFSETY") {
   field(EGU, "$(egu)")
 }
 
-#% gdatag,pv,ro,$(gda_name),INTENSITY,Summed intensity value
+#% gdatag,pv,ro,$(gda_name=),INTENSITY,Summed intensity value
 record(calc, "$(device):INTENSITY") {
   field(INPA, "$(device):BLADEA NPP")
   field(INPB, "$(device):BLADEB NPP")
@@ -237,7 +237,7 @@ record(calc, "$(device):INTENSITY") {
   field(EGU, "A")
 }
 
-#% gdatag,pv,ro,$(gda_name),XPOS,X Position
+#% gdatag,pv,ro,$(gda_name=),XPOS,X Position
 record(calc, "$(device):BEAMX") {
   field(INPA, "$(device):BLADEA NPP")
   field(INPB, "$(device):BLADEB NPP")
@@ -251,7 +251,7 @@ record(calc, "$(device):BEAMX") {
   field(EGU, "$(egu)")
 }
 
-#% gdatag,pv,ro,$(gda_name),YPOS,Y Position
+#% gdatag,pv,ro,$(gda_name=),YPOS,Y Position
 record(calc, "$(device):BEAMY") {
   field(INPA, "$(device):BLADEA NPP")
   field(INPB, "$(device):BLADEB NPP")
