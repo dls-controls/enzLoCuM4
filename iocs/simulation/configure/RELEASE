@@ -4,11 +4,11 @@ SUPPORT=/dls_sw/prod/R3.14.11/support
 
 # EPICS_BASE usually appears last so other apps can override stuff:
 EPICS_BASE=/dls_sw/epics/R3.14.11/base
-STD=      $(SUPPORT)/std/2-8dls4
-LOCUM4=   /dls_sw/work/R3.14.11/support/enzLoCuM4
-ASYN =    $(SUPPORT)/asyn/4-14
+STD=      $(SUPPORT)/std/2-8dls6
+LOCUM4=   $(TOP)/../..
+ASYN =    $(SUPPORT)/asyn/4-17
 #PYDRV =   $(SUPPORT)/pyDrv/1-2
-STREAMS = $(SUPPORT)/streamDevice/2-4dls5
-CALC=     $(SUPPORT)/calc/2-8dls2
+STREAMS = $(SUPPORT)/streamDevice/2-5
+CALC=     $(SUPPORT)/calc/2-8dls3
 
 -include $(TOP)/configure/RELEASE.private
