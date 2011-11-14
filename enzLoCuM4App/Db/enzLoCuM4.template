@@ -15,6 +15,7 @@
 # % macro, gda_name, GDA name
 # % macro, gda_desc, GDA description
 # % macro, name, Object and gui association name
+# % macro, noinit, Set to _noinit to suppress @init processing
 ################################################################################
 
 
@@ -84,7 +85,7 @@ record(mbbo, "$(device):SETRANGE")
 {
     field(DESC, "Measuring Range")
     field(DTYP, "stream")
-    field(OUT,  "@enzLoCuM4.protocol setrange($(adr)) $(port) 0")
+    field(OUT,  "@enzLoCuM4.protocol setrange$(noinit=)($(adr)) $(port) 0")
     field(ZRST, "100pA")
     field(ONST, "1nA")
     field(TWST, "10nA")
@@ -120,7 +121,7 @@ record(mbbo, "$(device):SETBIASV")
 {
     field(DESC, "Bias Voltage Source")
     field(DTYP, "stream")
-    field(OUT,  "@enzLoCuM4.protocol setbiasv($(adr)) $(port) 0")
+    field(OUT,  "@enzLoCuM4.protocol setbiasv$(noinit=)($(adr)) $(port) 0")
     field(ZRST, "Plus")
     field(ONST, "Minus")
     field(TWST, "External")
@@ -594,7 +595,7 @@ record(mbbo, "$(device):SETWINDOW")
 {
     field(DESC, "Integration Window")
     field(DTYP, "stream")
-    field(OUT,  "@enzLoCuM4.protocol setwindow($(adr)) $(port) 0")
+    field(OUT,  "@enzLoCuM4.protocol setwindow$(noinit=)($(adr)) $(port) 0")
     field(ZRST, "4")
     field(ONST, "8")
     field(TWST, "16")
