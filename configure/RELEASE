@@ -16,7 +16,7 @@ SUPPORT=/dls_sw/prod/R3.14.11/support
 STREAMDEVICE=        $(SUPPORT)/streamDevice/2-5
 # Needed for analogue readbacks.
 HY8401=         $(SUPPORT)/Hy8401ip/3-17
-CALC=           $(SUPPORT)/calc/2-8dls3
+CALC=           $(SUPPORT)/calc/2-8dls4
 # Uncomment the next lines for testing
 #ASYN=$(SUPPORT)/asyn/4-9
 #IPAC=$(SUPPORT)/ipac/2-8dls4-3
