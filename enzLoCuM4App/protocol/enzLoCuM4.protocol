@@ -22,21 +22,21 @@ extrainput   = Ignore;
 # 
 setrange  { out '$\$1:CONF:CURR:DC %{1E-10|1E-09|1E-08|1E-07|1E-06|1E-05|1E-04|1E-03|DEF}';
             @init {out '$\$1:CONF?';
-                   in  '\"S1_%{100pA|1nA|10nA|100nA|1\xb5A|10\xb5A|100\xb5A|1mA|Auto|Err}';
+                   in  '\"S1_%#{100pA|1nA|10nA|100nA|1\xb5A|10\xb5A|100\xb5A|1mA|Auto|Err|1uA=4|10uA=5|100uA=6}';
                   }
           }
 setrange_noinit  { out '$\$1:CONF:CURR:DC %{1E-10|1E-09|1E-08|1E-07|1E-06|1E-05|1E-04|1E-03|DEF}';
           }
 setbiasv  { out '$\$1:CONF:BIAS:SOURCE %{PLUS|MINUS|EXT|DEF}';
             @init {out '$\$1:CONF?';
-                   in  '\"S1_%*{100pA|1nA|10nA|100nA|1\xb5A|10\xb5A|100\xb5A|1mA|Auto|Err},'
+                   in  '\"S1_%*#{100pA|1nA|10nA|100nA|1\xb5A|10\xb5A|100\xb5A|1mA|Auto|Err|1uA=4|10uA=5|100uA=6},'
                        'S2_%{Plus|Minus|Ext|0Volt|Err}';
                   }
           }
 setbiasv_noinit  { out '$\$1:CONF:BIAS:SOURCE %{PLUS|MINUS|EXT|DEF}';
           }
 conf      { out '$\$1:CONF?';
-            in  '\"S1_%(A){100pA|1nA|10nA|100nA|1\xb5A|10\xb5A|100\xb5A|1mA|Auto|Err},'
+            in  '\"S1_%(A)#{100pA|1nA|10nA|100nA|1\xb5A|10\xb5A|100\xb5A|1mA|Auto|Err|1uA=4|10uA=5|100uA=6},'
                 'S2_%(B){Plus|Minus|Ext|0Volt|Err},'
                 'HV_%(C){OFF|ON},' 
                 'Ext_%(D){OFF|ON},' 
