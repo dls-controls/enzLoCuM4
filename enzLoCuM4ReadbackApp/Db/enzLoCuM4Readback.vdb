@@ -302,36 +302,32 @@ record(waveform, "$(device):BLADEDWF") {
 
 record(calc, "$(device):BLADEAuA") {
   field(DESC, "BLADEA*1e6")
-  field(SCAN, ".1 second")
   field(CALC, "A*1000000")
-  field(INPA, "$(device):BLADEA PP")
+  field(INPA, "$(device):BLADEA CP")
   field(EGU, "uA")
   field(PREC, "5")
 }
 
 record(calc, "$(device):BLADEBuA") {
   field(DESC, "BLADEB*1e6")
-  field(SCAN, ".1 second")
   field(CALC, "A*1000000")
-  field(INPA, "$(device):BLADEB PP")
+  field(INPA, "$(device):BLADEB CP")
   field(EGU, "uA")
   field(PREC, "5")
 }
 
 record(calc, "$(device):BLADECuA") {
   field(DESC, "BLADEC*1e6")
-  field(SCAN, ".1 second")
   field(CALC, "A*1000000")
-  field(INPA, "$(device):BLADEC PP")
+  field(INPA, "$(device):BLADEC CP")
   field(EGU, "uA")
   field(PREC, "5")
 }
 
 record(calc, "$(device):BLADEDuA") {
   field(DESC, "BLADED*1e6")
-  field(SCAN, ".1 second")
   field(CALC, "A*1000000")
-  field(INPA, "$(device):BLADED PP")
+  field(INPA, "$(device):BLADED CP")
   field(EGU, "uA")
   field(PREC, "5")
 }
