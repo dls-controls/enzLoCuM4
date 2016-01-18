@@ -223,6 +223,7 @@ record(ai, "$(device):OFFSETY") {
 }
 
 #% gdatag,pv,ro,$(gda_name=),INTENSITY,Summed intensity value
+#% archiver 1 Monitor
 record(calc, "$(device):INTENSITY") {
   field(INPA, "$(device):BLADEA NPP")
   field(INPB, "$(device):BLADEB NPP")
@@ -235,6 +236,7 @@ record(calc, "$(device):INTENSITY") {
 }
 
 #% gdatag,pv,ro,$(gda_name=),XPOS,X Position
+#% archiver 1 Monitor
 record(calc, "$(device):BEAMX") {
   field(INPA, "$(device):BLADEA NPP")
   field(INPB, "$(device):BLADEB NPP")
@@ -249,6 +251,7 @@ record(calc, "$(device):BEAMX") {
 }
 
 #% gdatag,pv,ro,$(gda_name=),YPOS,Y Position
+#% archiver 1 Monitor
 record(calc, "$(device):BEAMY") {
   field(INPA, "$(device):BLADEA NPP")
   field(INPB, "$(device):BLADEB NPP")
