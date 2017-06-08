@@ -25,6 +25,10 @@
 # blade_d_card, blade_d_chan => BLADE D logical card number and ADC channel number
 # egu => units for positions
 # desc_prefix => Prefix for descriptions. Used by screens. E.g. 'PBPM Blade'
+# archiver_method => Optional macro defining the external archiver type
+# Default is Monitor.  Leave blank for Sampled
+# adel => Optional macro defining the archive deadband calculation.
+# Default is 0.002 x Current value for 10V input
 ################################################################################
 #% gdatag,template,bpm,$(gda_name=),$(gda_desc=)
 record(transform, "$(device):UPDATE") {
@@ -45,7 +49,7 @@ record(transform, "$(device):UPDATE") {
   field(CLCE, "0.08*B")
   field(OUTE, "$(device):FANLOW PP")
   field(CMTF, "Archive deadband")
-  field(CLCF, "0.002*B")
+  field(CLCF, "$(adel=0.002*B)")
   field(OUTF, "$(device):FANADEL PP")
 }
 
@@ -98,7 +102,7 @@ record(dfanout, "$(device):FANADEL") {
 }
 
 #% gdatag,pv,ro,$(gda_curr_name),I1,Channel 1 Current
-#% archiver 1 Monitor
+#% archiver 1 $(archiver_method=Monitor)
 record(ai, "$(device):BLADEA") {
   field(DESC, "$(desc_prefix) A")
   field(DTYP, "Hy8401ip")
@@ -114,14 +118,13 @@ record(ai, "$(device):BLADEA") {
   field(LOW, "-0.9e-10")
   field(HSV, "MINOR")
   field(LSV, "MINOR")
-  field(ADEL, "0.02")
   field(MDEL, "-1")
   field(PREC, "5")
   field(FLNK, "$(device):BLADEB")
 }
 
 #% gdatag,pv,ro,$(gda_curr_name),I2,Channel 2 Current
-#% archiver 1 Monitor
+#% archiver 1 $(archiver_method=Monitor)
 record(ai, "$(device):BLADEB") {
   field(DESC, "$(desc_prefix) B")
   field(DTYP, "Hy8401ip")
@@ -136,14 +139,13 @@ record(ai, "$(device):BLADEB") {
   field(LOW, "-0.9e-10")
   field(HSV, "MINOR")
   field(LSV, "MINOR")
-  field(ADEL, "0.02")
   field(MDEL, "-1")
   field(PREC, "5")
   field(FLNK, "$(device):BLADEC")
 }
 
 #% gdatag,pv,ro,$(gda_curr_name),I3,Channel 3 Current
-#% archiver 1 Monitor
+#% archiver 1 $(archiver_method=Monitor)
 record(ai, "$(device):BLADEC") {
   field(DESC, "$(desc_prefix) C")
   field(DTYP, "Hy8401ip")
@@ -158,14 +160,13 @@ record(ai, "$(device):BLADEC") {
   field(LOW, "-0.9e-10")
   field(HSV, "MINOR")
   field(LSV, "MINOR")
-  field(ADEL, "0.02")
   field(MDEL, "-1")
   field(PREC, "5")
   field(FLNK, "$(device):BLADED")
 }
 
 #% gdatag,pv,ro,$(gda_curr_name),I4,Channel 4 Current
-#% archiver 1 Monitor
+#% archiver 1 $(archiver_method=Monitor)
 record(ai, "$(device):BLADED") {
   field(DESC, "$(desc_prefix) D")
   field(DTYP, "Hy8401ip")
@@ -180,7 +181,6 @@ record(ai, "$(device):BLADED") {
   field(LOW, "-0.9e-10")
   field(HSV, "MINOR")
   field(LSV, "MINOR")
-  field(ADEL, "0.02")
   field(MDEL, "-1")
   field(PREC, "5")
   field(FLNK, "$(device):INTENSITY")
@@ -223,7 +223,7 @@ record(ai, "$(device):OFFSETY") {
 }
 
 #% gdatag,pv,ro,$(gda_name=),INTENSITY,Summed intensity value
-#% archiver 1 Monitor
+#% archiver 1 $(archiver_method=Monitor)
 record(calc, "$(device):INTENSITY") {
   field(INPA, "$(device):BLADEA NPP")
   field(INPB, "$(device):BLADEB NPP")
@@ -236,7 +236,7 @@ record(calc, "$(device):INTENSITY") {
 }
 
 #% gdatag,pv,ro,$(gda_name=),XPOS,X Position
-#% archiver 1 Monitor
+#% archiver 1 $(archiver_method=Monitor)
 record(calc, "$(device):BEAMX") {
   field(INPA, "$(device):BLADEA NPP")
   field(INPB, "$(device):BLADEB NPP")
@@ -251,7 +251,7 @@ record(calc, "$(device):BEAMX") {
 }
 
 #% gdatag,pv,ro,$(gda_name=),YPOS,Y Position
-#% archiver 1 Monitor
+#% archiver 1 $(archiver_method=Monitor)
 record(calc, "$(device):BEAMY") {
   field(INPA, "$(device):BLADEA NPP")
   field(INPB, "$(device):BLADEB NPP")
@@ -271,7 +271,7 @@ record(waveform, "$(device):BLADEAWF") {
   field(INP, "#C$(blade_a_card) S$(blade_a_chan) @")
   field(FTVL, "FLOAT")
   field(NELM, "5000")
-  field(FLNK, "$(device):BLADEBWF")
+#  field(FLNK, "$(device):BLADEBWF")
 }
 
 record(waveform, "$(device):BLADEBWF") {
@@ -281,7 +281,7 @@ record(waveform, "$(device):BLADEBWF") {
   field(INP, "#C$(blade_b_card) S$(blade_b_chan) @")
   field(FTVL, "FLOAT")
   field(NELM, "5000")
-  field(FLNK, "$(device):BLADECWF")
+#  field(FLNK, "$(device):BLADECWF")
 }
 
 record(waveform, "$(device):BLADECWF") {
@@ -291,7 +291,7 @@ record(waveform, "$(device):BLADECWF") {
   field(INP, "#C$(blade_c_card) S$(blade_c_chan) @")
   field(FTVL, "FLOAT")
   field(NELM, "5000")
-  field(FLNK, "$(device):BLADEDWF")
+#  field(FLNK, "$(device):BLADEDWF")
 }
 
 record(waveform, "$(device):BLADEDWF") {
